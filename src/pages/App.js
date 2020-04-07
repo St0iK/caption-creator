@@ -13,6 +13,7 @@ const useStyles = makeStyles({
         flex: 1,
         minHeight: 0,
         minWidth: 0,
+        height: '100%'
     },
     drawer: {
         display: 'flex',
@@ -25,13 +26,18 @@ const useStyles = makeStyles({
         minHeight: 0,
         minWidth: 0,
     },
+    test:{
+        height: '100%;',
+        display: 'flex',
+        flexDirection: 'column'
+    }
 });
 
 const App = () => {
   const classes = useStyles();
 
   return (
-      <>
+      <div className={classes.test}>
       <Header/>
       <div className={classes.root}>
           <Paper square className={classes.drawer}>
@@ -43,7 +49,7 @@ const App = () => {
 
       </div>
     <Footer/>
-    </>
+    </div>
   );
 };
 

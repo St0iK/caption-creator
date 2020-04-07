@@ -1,38 +1,44 @@
 import React, {useContext} from "react";
 import {withStyles} from "@material-ui/core/styles";
-import {Grid, TextField} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from '@material-ui/icons/Close';
+import VttTimeline from "./VttTimeline";
 
 const Player = ({classes}) => {
 
     return (
-        <div>Player</div>
+      <div className={classes.root}>
+          <div className={classes.videoContainer}>
+              <div className={classes.video}> Video Player </div>
+          </div>
+          <div className={classes.vttTimeline}>
+              <VttTimeline />
+          </div>
+      </div>
     );
 };
 
 const styles = theme => ({
     root: {
-        flexGrow: 1
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
     },
-    grow: {
-        flexGrow: 1,
-        display: "flex",
-        alignItems: "center"
+    videoContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        flex: 1,
+        backgroundColor: 'black',
+        minHeight: 0,
+        minWidth: 0,
     },
-    icon: {
-        marginRight: theme.spacing.unit,
-        color: "green",
-        fontSize: 45
+    video: {
+        height: '100%',
+        maxWidth: 1000,
     },
-    mobile: {
-        display: "none"
+    vttTimeline: {
+        flex: 1,
+        maxHeight: 300,
+        minHeight: 100,
     },
-    picture: {
-        height: "50px",
-        borderRadius: "90%",
-        marginRight: theme.spacing.unit * 2
-    }
 });
 
 export default withStyles(styles)(Player);

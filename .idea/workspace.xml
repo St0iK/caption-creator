@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0aee3a24-eb6b-4cde-aa3b-f0617480209c" name="Default Changelist" comment="" />
+    <list default="true" id="0aee3a24-eb6b-4cde-aa3b-f0617480209c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Editor/Cue/CueEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Editor/Cue/CueEditor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Editor/VTTEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Editor/VTTEditor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Player/Player.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Player/Player.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/App.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +25,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1a57teXYi2X5FoSv1UFpc3TB8Of" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -22,16 +36,24 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/cue-editor" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/common" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/common" />
       <recent name="$PROJECT_DIR$/src/components/cue-editor" />
     </key>
   </component>
@@ -47,6 +69,8 @@
       <updated>1586013816570</updated>
       <workItem from="1586013818249" duration="4197000" />
       <workItem from="1586090550328" duration="2487000" />
+      <workItem from="1586157139125" duration="5972000" />
+      <workItem from="1586243759814" duration="3624000" />
     </task>
     <servers />
   </component>
@@ -54,6 +78,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="817" y="462" key="#ESLint" timestamp="1586243870067">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="817" y="462" key="#ESLint/0.23.1920.1057@0.23.1920.1057" timestamp="1586243870067" />
     <state x="686" y="351" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586089889113">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
@@ -70,9 +98,9 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="661" y="164" width="598" height="774" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1586093326595" />
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1586090715805">
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1586247473022">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1586090715805" />
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1586247473022" />
   </component>
 </project>
