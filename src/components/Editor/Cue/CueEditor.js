@@ -4,20 +4,21 @@ import {Grid, TextField} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import TimingInput from "./TimingInput";
+import {CueContext} from "../../../common/cue-context";
 
-const CueEditor = ({cue, classes}) => {
-
+const CueEditor = ({classes}) => {
+    const { cue, onChangeCueStart, onChangeCueEnd, onChangeCueText, onRemoveCue } = React.useContext(CueContext);
     const [text, setText] = useState(cue.text);
-    const [startTime, setStartTime] = useState(cue.startTime);
-    const [endTime, setEndTime] = useState(cue.endTime);
+    // const [startTime, setStartTime] = useState(cue.startTime);
+    // const [endTime, setEndTime] = useState(cue.endTime);
 
     const onChangeStartTime = e => {
-        setStartTime(parseFloat(e.target.value));
+        onChangeCueStart(parseFloat(e.target.value));
         console.log(e.target.value);
     }
 
     const onChangeEndTime = e => {
-        setEndTime(parseFloat(e.target.value));
+        onChangeCueEnd(parseFloat(e.target.value));
         console.log(e.target.value);
     }
 
@@ -34,18 +35,18 @@ const CueEditor = ({cue, classes}) => {
         <Grid container spacing={2} className={classes.root}>
             <Grid container item alignItems="center" spacing={1} wrap="nowrap" justify="space-between">
                 <Grid item>
-                    <TimingInput variant="outlined" label="Start Time" value={startTime} onChange={onChangeStartTime} />
+                    <TimingInput variant="outlined" label="Start Time" value={cue.startTime} onChange={onChangeStartTime} />
                 </Grid>
                 <Grid item>
                     <TimingInput
                       variant="outlined"
                       label="Show For"
-                      value={endTime - startTime}
+                      value={cue.endTime - cue.startTime}
                       onChange={onChangeTimeSpan}
                     />
                 </Grid>
                 <Grid item>
-                    <TimingInput variant="outlined" label="End Time" value={endTime} onChange={onChangeEndTime} />
+                    <TimingInput variant="outlined" label="End Time" value={cue.endTime} onChange={onChangeEndTime} />
                 </Grid>
                 <Grid item>
                     <IconButton aria-label="Delete" edge="end">

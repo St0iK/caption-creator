@@ -24,3 +24,4 @@ yarn-error.log*
 
 .now
 .idea
+/.idea/workspace.xml
