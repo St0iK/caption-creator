@@ -19,7 +19,9 @@ export function CueProvider({ cue, cueIndex, children }) {
 			value={{
 				cue,
 				onChangeCueStart: newStartTime => {
+					console.log('Called!');
 					const newCue = new VTTCue(newStartTime, cue.endTime, cue.text);
+					console.log(newCue);
 					onChangeCue(newCue, cueIndex, true);
 				},
 				onChangeCueEnd: newEndTime => {

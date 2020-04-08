@@ -9,8 +9,10 @@ import {CueContext} from "../../../common/cue-context";
 const CueEditor = ({classes}) => {
     const { cue, onChangeCueStart, onChangeCueEnd, onChangeCueText, onRemoveCue } = React.useContext(CueContext);
     const [text, setText] = useState(cue.text);
-    // const [startTime, setStartTime] = useState(cue.startTime);
-    // const [endTime, setEndTime] = useState(cue.endTime);
+
+    const onChangeText = e => {
+        setText(e.target.value);
+    };
 
     const onChangeStartTime = e => {
         onChangeCueStart(parseFloat(e.target.value));
@@ -19,17 +21,11 @@ const CueEditor = ({classes}) => {
 
     const onChangeEndTime = e => {
         onChangeCueEnd(parseFloat(e.target.value));
-        console.log(e.target.value);
-    }
-
-    const onChangeText = e => {
-        setText(e.target.value);
-        console.log(e.target.value);
-    }
+    };
 
     const onChangeTimeSpan = e => {
-        console.log(e.target.value);
-    }
+        onChangeCueEnd(cue.startTime + parseFloat(e.target.value));
+    };
 
     return (
         <Grid container spacing={2} className={classes.root}>
@@ -49,7 +45,7 @@ const CueEditor = ({classes}) => {
                     <TimingInput variant="outlined" label="End Time" value={cue.endTime} onChange={onChangeEndTime} />
                 </Grid>
                 <Grid item>
-                    <IconButton aria-label="Delete" edge="end">
+                    <IconButton aria-label="Delete" edge="end" onClick={onRemoveCue}>
                         <CloseIcon fontSize="small"/>
                     </IconButton>
                 </Grid>

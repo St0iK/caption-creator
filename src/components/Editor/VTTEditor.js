@@ -1,30 +1,25 @@
-import React, {useContext, useState} from "react";
+import React, { useContext } from "react";
 import {withStyles} from "@material-ui/core/styles";
 import FabButton from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CueEditor from "./Cue/CueEditor";
+import {CueProvider} from "../../common/cue-context";
+import {CuesContext} from "../../common/cues-context";
 
 
 const VTTEditor = ({classes}) => {
-  const mockQueues = [
-    new VTTCue(0, 2, '')
-  ];
 
-  const [cues, setCues] = useState(mockQueues);
-
-  const onAddCue = () => {
-    console.log('Add a new Cue');
-    const newCues = cues.concat(new VTTCue(0, 2, ''));
-    setCues(newCues);
-  }
+  const { cues, loading, onAddCue } = useContext(CuesContext);
+  
   return (
     <div className={classes.root}>
       {
         cues.map((cue, index) => (
-          <CueEditor cue={cue}/>
+          <CueProvider cue={cue} cueIndex={index}>
+            <CueEditor/>
+          </CueProvider>
         ))
       }
-
       <FabButton className={classes.fab} color="primary" aria-label="Add Cue" onClick={onAddCue}>
         <AddIcon/>
       </FabButton>
