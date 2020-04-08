@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import {CuesContext} from "../../common/cues-context";
+import {CueProvider} from "../../common/cue-context";
+import CueEditor from "../Editor/Cue/CueEditor";
 
 const useStyles = makeStyles({
   root: {
@@ -42,11 +45,17 @@ VttTimeline.propTypes = {};
 
 export default function VttTimeline() {
   const classes = useStyles();
+  const { cues } = React.useContext(CuesContext);
 
   return (
       <div className={classes.root}>
         <div className={classes.ticks}>
           <div>TimeTicks</div>
+          {
+            cues.map((cue, index) => (
+              console.log(cue)
+            ))
+          }
         </div>
         <div className={classes.trackRoot}>
           {/*<div className={classes.audioTrack}>*/}

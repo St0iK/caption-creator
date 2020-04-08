@@ -10,7 +10,7 @@ import {CuesContext} from "../../common/cues-context";
 const VTTEditor = ({classes}) => {
 
   const { cues, loading, onAddCue } = useContext(CuesContext);
-  
+
   return (
     <div className={classes.root}>
       {
