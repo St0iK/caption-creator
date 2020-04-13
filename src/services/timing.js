@@ -4,7 +4,6 @@
  * @param seconds
  */
 export function formatSeconds(seconds) {
-  console.log(seconds);
   if (isNaN(seconds)) return '00:00.000';
   const min = Math.floor(seconds / 60);
   const sec = Math.floor(seconds % 60);

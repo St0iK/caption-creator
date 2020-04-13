@@ -12,11 +12,11 @@ const Footer = ({ classes }) => {
         <Paper square className={classes.root} elevation={8}>
             <div className={classes.footerSection}>
                 <Typography variant="body2" color="inherit">
-                    Prepare on a sunny day
+
                 </Typography>
                 <div className={classes.footerDivider} />
                 <Typography variant="body2" color="inherit">
-                    Stoikidis Dimitrios
+                    St0iK
                 </Typography>
             </div>
         </Paper>
