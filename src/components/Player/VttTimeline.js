@@ -50,17 +50,13 @@ export default function VttTimeline() {
   const { cues } = React.useContext(CuesContext);
   const [width, setWidth] = useState(0);
 
+  // run when the cues change
   useEffect(() => {
     if (cues.length) {
       const lastCue = cues[cues.length - 1];
       setWidth(lastCue.endTime * 200);
     }
   }, [cues]);
-
-
-  if (cues.length) {
-
-  }
 
   const height = 20;
   const pixelsPerTick = 200;
