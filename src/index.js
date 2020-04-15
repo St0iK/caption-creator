@@ -8,19 +8,17 @@ import * as serviceWorker from "./serviceWorker";
 
 import Context from "./context";
 
-
 const Root = () => {
-
   const initialState = useContext(Context);
   // const [state, dispatch] = useReducer(reducer, initialState);
   // console.log(state);
 
   return (
     <Router>
-          <Switch>
-            <Route exact path="/" component={App} />
-            <Route path="/login" component={Splash} />
-          </Switch>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/login" component={Splash} />
+      </Switch>
     </Router>
   );
 };

@@ -1,3 +1,3 @@
-import CueHandle from './CueHandle';
+import CueHandle from "./CueHandle";
 
 export default CueHandle;

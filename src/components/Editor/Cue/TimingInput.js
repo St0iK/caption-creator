@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import MaskedInput from 'react-text-mask';
-import { formatSeconds, parseVTTTime } from '../../../services/timing';
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import TextField from "@material-ui/core/TextField";
+import MaskedInput from "react-text-mask";
+import { formatSeconds, parseVTTTime } from "../../../services/timing";
 
 TimingInput.propTypes = {
   value: PropTypes.number,
@@ -20,7 +20,7 @@ export default function TimingInput({ value, onChange, ...props }) {
     <TextField
       {...props}
       value={vttTime}
-      onBlur={e => {
+      onBlur={(e) => {
         e.target.value = parseVTTTime(e.target.value);
         onChange(e);
       }}
@@ -38,11 +38,11 @@ function CustomMaskedInput({ inputRef, ...props }) {
   return (
     <MaskedInput
       {...props}
-      ref={ref => {
+      ref={(ref) => {
         inputRef(ref ? ref.inputElement : null);
       }}
-      mask={[/\d/, /\d/, ':', /[0-5]/, /\d/, '.', /\d/, /\d/, /\d/]}
-      placeholderChar={'\u2000'}
+      mask={[/\d/, /\d/, ":", /[0-5]/, /\d/, ".", /\d/, /\d/, /\d/]}
+      placeholderChar={"\u2000"}
       keepCharPositions
     />
   );

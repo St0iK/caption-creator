@@ -4,20 +4,33 @@
  * @param seconds
  */
 export function formatSeconds(seconds) {
-  if (isNaN(seconds)) return '00:00.000';
+  if (isNaN(seconds)) return "00:00.000";
   const min = Math.floor(seconds / 60);
   const sec = Math.floor(seconds % 60);
   const mill = Math.round((seconds - Math.floor(seconds)) * 1000);
-  return `${formatTimeUnit(min, 2)}:${formatTimeUnit(sec, 2)}.${formatTimeUnit(mill, 3)}`;
+  return `${formatTimeUnit(min, 2)}:${formatTimeUnit(sec, 2)}.${formatTimeUnit(
+    mill,
+    3
+  )}`;
 }
 
 function formatTimeUnit(unit, width) {
-  if (!unit) return '0'.repeat(width);
-  return unit.toString().padStart(width, '0');
+  if (!unit) return "0".repeat(width);
+  return unit.toString().padStart(width, "0");
 }
 
 export function parseVTTTime(formattedTime) {
-  const [min10, min1, sep1, sec10, sec1, sep2, mill10, mill100, mill1000] = formattedTime.split(''); // eslint-disable-line no-unused-vars
+  const [
+    min10,
+    min1,
+    sep1,
+    sec10,
+    sec1,
+    sep2,
+    mill10,
+    mill100,
+    mill1000,
+  ] = formattedTime.split(""); // eslint-disable-line no-unused-vars
 
   return (
     parseTimeUnit(min10) * 10 * 60 +
