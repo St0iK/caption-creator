@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0aee3a24-eb6b-4cde-aa3b-f0617480209c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Editor/VTTEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Editor/VTTEditor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Player/CueHandle/CueHandleCenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Player/CueHandle/CueHandleCenter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Player/Player.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Player/Player.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Player/VttTimeline.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Player/VttTimeline.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +20,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1a57teXYi2X5FoSv1UFpc3TB8Of" />
   <component name="ProjectViewState">
@@ -45,7 +48,10 @@
     <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="node_modules/.bin/prettier" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="run.prettier.on.save" value="true" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -87,17 +93,21 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="698" y="305" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1920.1057@0.23.1920.1057" timestamp="1586092304517" />
-    <state x="469" y="190" key="SettingsEditor" timestamp="1586090854356">
+    <state x="703" y="396" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1586937632769">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="469" y="190" key="SettingsEditor/0.23.1920.1057@0.23.1920.1057" timestamp="1586090854356" />
-    <state x="661" y="164" width="598" height="774" key="find.popup" timestamp="1586334261362">
+    <state x="703" y="396" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1920.1057@0.23.1920.1057" timestamp="1586937632769" />
+    <state x="469" y="190" key="SettingsEditor" timestamp="1586938380709">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="661" y="164" width="598" height="774" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1586334261362" />
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1586331392164">
+    <state x="469" y="190" key="SettingsEditor/0.23.1920.1057@0.23.1920.1057" timestamp="1586938380709" />
+    <state x="661" y="164" width="598" height="774" key="find.popup" timestamp="1586938642117">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1586331392164" />
+    <state x="661" y="164" width="598" height="774" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1586938642117" />
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1586938581235">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1586938581235" />
   </component>
 </project>

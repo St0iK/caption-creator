@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import VttTimeline from "./VttTimeline";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
+import CueTrack from "./CueTrack";
 const Player = ({ classes }) => {
   return (
     <div className={classes.root}>
@@ -16,6 +17,7 @@ const Player = ({ classes }) => {
       </div>
       <div className={classes.vttTimeline}>
         <VttTimeline />
+        <CueTrack />
       </div>
     </div>
   );

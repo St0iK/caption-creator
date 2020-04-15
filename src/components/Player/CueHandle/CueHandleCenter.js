@@ -2,7 +2,8 @@ import * as React from "react";
 import clsx from "clsx";
 import * as PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
-import { useDragging, useCue } from "../../common";
+import { CueContext } from "../../../common/cue-context";
+import useDragging from "../../../common/use-dragging.hook";
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +21,7 @@ CueHandleCenter.propTypes = {
 
 function CueHandleCenter({ onChange, className }) {
   const classes = useStyles();
-  const { onDeltaCue } = useCue();
+  const { onDeltaCue } = React.useContext(CueContext);
   const [handleRef, setHandleRef] = React.useState();
   const startPosRef = React.useRef(0);
   const prevPosRef = React.useRef(0);
