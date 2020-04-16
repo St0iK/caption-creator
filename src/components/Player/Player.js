@@ -17,7 +17,6 @@ const Player = ({ classes }) => {
       </div>
       <div className={classes.vttTimeline}>
         <VttTimeline />
-        <CueTrack />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { CueProvider } from "../../common/cue-context";
 import CueEditor from "../Editor/Cue/CueEditor";
 import { formatSeconds } from "../../services/timing";
 import { useEffect, useState } from "react";
+import CueTrack from "./CueTrack";
 
 const useStyles = makeStyles({
   root: {
@@ -63,7 +64,6 @@ export default function VttTimeline() {
   return (
     <div className={classes.root}>
       <div className={classes.ticks}>
-        <div>TimeTicks</div>
         <SvgSegment
           key="final"
           width={width}
@@ -72,12 +72,7 @@ export default function VttTimeline() {
         />
       </div>
       <div className={classes.trackRoot}>
-        {/*<div className={classes.audioTrack}>*/}
-        {/*  <div>AudioTrack</div>*/}
-        {/*</div>*/}
-        {/*<div className={classes.cueTrack}>*/}
-        {/*  <div>CueTrack</div>*/}
-        {/*</div>*/}
+        <CueTrack />
       </div>
     </div>
   );
