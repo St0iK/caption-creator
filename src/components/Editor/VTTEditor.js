@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
+// import { FabButton, makeStyles } from "@material-ui/core";
 import FabButton from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import CueEditor from "./Cue/CueEditor";
@@ -8,7 +9,7 @@ import { CuesContext } from "../../common/cues-context";
 
 const VTTEditor = ({ classes }) => {
   const { cues, loading, onAddCue } = useContext(CuesContext);
-
+  console.log(classes);
   return (
     <div className={classes.root}>
       {cues.map((cue, index) => (
@@ -34,6 +35,7 @@ const styles = (theme) => ({
     flex: 1,
     width: 400,
     padding: 20,
+    overflowY: "scroll",
   },
 });
 

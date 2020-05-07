@@ -6,7 +6,7 @@ import CueEditor from "../Editor/Cue/CueEditor";
 import { formatSeconds } from "../../services/timing";
 import { useEffect, useState } from "react";
 import CueTrack from "./CueTrack";
-import TimeTicks from './TimeTicks'
+import TimeTicks from "./TimeTicks";
 import ZoomContainer from "../ZoomContainer";
 
 const useStyles = makeStyles({

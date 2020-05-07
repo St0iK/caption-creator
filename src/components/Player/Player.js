@@ -4,7 +4,6 @@ import VttTimeline from "./VttTimeline";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 import CueTrack from "./CueTrack";
 
-
 const Player = ({ classes }) => {
   return (
     <div className={classes.root}>
@@ -46,6 +45,7 @@ const styles = (theme) => ({
     flex: 1,
     maxHeight: 300,
     minHeight: 100,
+    overflowX: "scroll",
   },
 });
 
