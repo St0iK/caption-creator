@@ -1,13 +1,8 @@
-import React, { useContext } from "react";
-import Context from "../context";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
+import React from "react";
+import { Typography, Paper, makeStyles } from "@material-ui/core";
 
-const Footer = ({ classes }) => {
-  const { state } = useContext(Context);
-
+const Footer = (props) => {
+  const classes = useStyles();
   return (
     <Paper square className={classes.root} elevation={8}>
       <div className={classes.footerSection}>
@@ -21,7 +16,7 @@ const Footer = ({ classes }) => {
   );
 };
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
@@ -31,7 +26,6 @@ const styles = (theme) => ({
     color: "white",
     zIndex: 1,
     padding: "0 20px",
-    position: "fixed",
     bottom: 0,
     width: "100%",
   },
@@ -45,6 +39,6 @@ const styles = (theme) => ({
     width: 20,
     height: 28,
   },
-});
+}));
 
-export default withStyles(styles)(Footer);
+export default Footer;

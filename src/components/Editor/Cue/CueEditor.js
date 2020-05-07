@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { Grid, TextField } from "@material-ui/core";
+import { Grid, TextField, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TimingInput from "./TimingInput";
 import { CueContext } from "../../../common/cue-context";
 
-const CueEditor = ({ classes }) => {
+const CueEditor = () => {
   const {
     cue,
     onChangeCueStart,
@@ -15,6 +14,8 @@ const CueEditor = ({ classes }) => {
     onRemoveCue,
   } = React.useContext(CueContext);
   const [text, setText] = useState(cue.text);
+
+  const classes = useStyles();
 
   const onChangeText = (e) => {
     setText(e.target.value);
@@ -68,7 +69,12 @@ const CueEditor = ({ classes }) => {
           />
         </Grid>
         <Grid item>
-          <IconButton aria-label="Delete" edge="end" onClick={onRemoveCue}>
+          <IconButton
+            aria-label="Delete"
+            edge="end"
+            size="small"
+            onClick={onRemoveCue}
+          >
             <CloseIcon fontSize="small" />
           </IconButton>
         </Grid>
@@ -89,11 +95,15 @@ const CueEditor = ({ classes }) => {
   );
 };
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: 5,
     marginBottom: 10,
+  },
+  inputContainer: {
+    display: "flex",
+    width: "100%",
   },
   grow: {
     flexGrow: 1,
@@ -105,7 +115,7 @@ const styles = (theme) => ({
     fontSize: 6,
   },
   icon: {
-    // marginRight: theme.spacing.unit,
+    // marginRight: theme.spacing(1),
     color: "green",
     fontSize: 45,
   },
@@ -117,6 +127,6 @@ const styles = (theme) => ({
     borderRadius: "90%",
     // marginRight: theme.spacing.unit * 2,
   },
-});
+}));
 
-export default withStyles(styles)(CueEditor);
+export default CueEditor;

@@ -7,10 +7,10 @@ import CueHandle from "./CueHandle";
 
 const useStyles = makeStyles({
   root: {
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#616161',
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#616161",
   },
   cueContainer: {
     position: "relative",
@@ -27,10 +27,10 @@ const useStyles = makeStyles({
     userSelect: "none",
   },
   content: {
-    height: '100%',
+    height: "100%",
   },
   scrollContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -44,12 +44,12 @@ export default function CueTrack() {
   const classes = useStyles();
   const { cues } = React.useContext(CuesContext);
 
-
   return (
     <div className={classes.root}>
       <div className={classes.cueContainer}>
         {cues.map((cue, index) => (
-          <CueProvider cue={cue} cueIndex={index}>
+          // WARNING CHANGE key={index} to key={something unique, preferably an id}
+          <CueProvider cue={cue} cueIndex={index} key={index}>
             <CueHandle key={index}>
               <div className={classes.cueContent}>
                 <Typography color="inherit" variant="h5" noWrap>

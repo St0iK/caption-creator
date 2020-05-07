@@ -1,42 +1,46 @@
 import React, { useContext } from "react";
-import { withStyles } from "@material-ui/core/styles";
-// import { FabButton, makeStyles } from "@material-ui/core";
-import FabButton from "@material-ui/core/Fab";
+import { Fab, makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CueEditor from "./Cue/CueEditor";
 import { CueProvider } from "../../common/cue-context";
 import { CuesContext } from "../../common/cues-context";
 
-const VTTEditor = ({ classes }) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flex: 1,
+    width: 400,
+    padding: 10,
+    marginBottom: "5rem",
+  },
+  fab: {
+    position: "absolute",
+    left: "300px",
+    top: "85%",
+  },
+}));
+
+const VTTEditor = () => {
   const { cues, loading, onAddCue } = useContext(CuesContext);
-  console.log(classes);
+  const classes = useStyles();
+
   return (
     <div className={classes.root}>
       {cues.map((cue, index) => (
-        <CueProvider cue={cue} cueIndex={index}>
+        // WARNING CHANGE key={index} to key={something unique, preferably an id}
+        <CueProvider cue={cue} cueIndex={index} key={index}>
           <CueEditor />
         </CueProvider>
       ))}
-      <FabButton
+      <Fab
         className={classes.fab}
         color="primary"
         aria-label="Add Cue"
         onClick={onAddCue}
       >
         <AddIcon />
-      </FabButton>
+      </Fab>
     </div>
   );
 };
 
-const styles = (theme) => ({
-  root: {
-    position: "relative",
-    flex: 1,
-    width: 400,
-    padding: 20,
-    overflowY: "scroll",
-  },
-});
-
-export default withStyles(styles)(VTTEditor);
+export default VTTEditor;

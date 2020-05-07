@@ -21,6 +21,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     height: "100%",
+    overflowY: "scroll",
   },
   player: {
     padding: 8,
