@@ -44,9 +44,7 @@ const App = () => {
       <CuesProvider>
         <div className={classes.root}>
           <Paper square className={classes.drawer}>
-            <CueProvider>
-              <VTTEditor />
-            </CueProvider>
+            <VTTEditor />
           </Paper>
           <div className={classes.player}>
             <Player />
