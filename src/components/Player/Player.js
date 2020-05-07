@@ -3,6 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import VttTimeline from "./VttTimeline";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 import CueTrack from "./CueTrack";
+
+
 const Player = ({ classes }) => {
   return (
     <div className={classes.root}>

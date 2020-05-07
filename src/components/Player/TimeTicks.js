@@ -60,12 +60,12 @@ export default function TimeTicks() {
   const pixelsPerTick = 200;
   return (
     <div className={classes.root}>
-        <SvgSegment
-          key="final"
-          width={width}
-          height={height}
-          pixelsPerTick={pixelsPerTick}
-        />
+      <SvgSegment
+        key="final"
+        width={width}
+        height={height}
+        pixelsPerTick={pixelsPerTick}
+      />
     </div>
   );
 

@@ -6,6 +6,7 @@ import CueHandleLeft from "./CheHandleLeft";
 import CueHandleRight from "./CheHandleRight";
 import CueHandleCenter from "./CueHandleCenter";
 import { CueContext } from "../../../common/cue-context";
+import { useZoom } from "../../ZoomContainer";
 
 const useStyles = makeStyles({
   cue: {
@@ -48,11 +49,14 @@ CueHandle.propTypes = {
   children: PropTypes.node,
 };
 
-export default function CueHandle({ children, pixelsPerSec, zoomContainerRect }) {
+export default function CueHandle({ children }) {
+
   const { cue } = React.useContext(CueContext);
   const [pos, setPos] = React.useState({ left: 0, right: 0 });
   const classes = useStyles();
+  const { pixelsPerSec, zoomContainerRect } = useZoom();
   const containerWidth = zoomContainerRect ? zoomContainerRect.width : 0;
+  console.log(containerWidth);
 
   React.useEffect(() => {
     if (Number.isFinite(pixelsPerSec) && Number.isFinite(containerWidth)) {
@@ -89,7 +93,7 @@ export default function CueHandle({ children, pixelsPerSec, zoomContainerRect })
       return { left, right };
     });
   }, []);
-
+  console.log({ pos });
   return (
     <div className={classes.cue} style={pos}>
       <div className={classes.borderHandleContainer}>
