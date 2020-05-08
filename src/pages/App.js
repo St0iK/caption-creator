@@ -8,6 +8,8 @@ import VTTEditor from "../components/Editor/VTTEditor";
 import Player from "../components/Player/Player";
 import { CueProvider } from "../common/cue-context";
 import { CuesProvider } from "../common/cues-context";
+import { useSelector, useDispatch } from "react-redux";
+import { onAddCue } from '../store/actions/cue_actions'
 
 const useStyles = makeStyles({
   root: {
@@ -38,6 +40,11 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(onAddCue())
+  }, [])
 
   return (
     <div className={classes.test}>

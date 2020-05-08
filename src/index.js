@@ -5,20 +5,22 @@ import App from "./pages/App";
 import Splash from "./pages/Splash";
 import ProtectedRoute from "./ProtectedRoute";
 import * as serviceWorker from "./serviceWorker";
-
-import Context from "./context";
+import { Provider } from "react-redux";
+import store from './store/store'
 
 const Root = () => {
-  const initialState = useContext(Context);
+
   // const [state, dispatch] = useReducer(reducer, initialState);
   // console.log(state);
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/login" component={Splash} />
-      </Switch>
+      <Provider store={store}>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route path="/login" component={Splash} />
+        </Switch>
+      </Provider>
     </Router>
   );
 };

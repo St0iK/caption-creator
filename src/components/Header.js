@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Context from "../context";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -7,7 +6,6 @@ import VideoLabelIcon from "@material-ui/icons/VideoLabel";
 import Typography from "@material-ui/core/Typography";
 
 const Header = ({ classes }) => {
-  const { state } = useContext(Context);
 
   return (
     <div className={classes.root}>
