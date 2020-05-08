@@ -4,35 +4,38 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TimingInput from "./TimingInput";
 import { CueContext } from "../../../common/cue-context";
+import { removeCue } from "../../../store/actions/cue_actions";
+import { useDispatch } from "react-redux";
 
-const CueEditor = () => {
-  const {
-    cue,
-    onChangeCueStart,
-    onChangeCueEnd,
-    onChangeCueText,
-    onRemoveCue,
-  } = React.useContext(CueContext);
-  const [text, setText] = useState(cue.text);
-
+const CueEditor = ({ cue, cueIndex }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  // const {
+  //   cue,
+  //   onChangeCueStart,
+  //   onChangeCueEnd,
+  //   onChangeCueText,
+  //   onRemoveCue,
+  // } = React.useContext(CueContext);
+  const [text, setText] = useState(cue.text);
 
   const onChangeText = (e) => {
     setText(e.target.value);
   };
 
-  const onChangeStartTime = (e) => {
-    onChangeCueStart(parseFloat(e.target.value));
-    console.log(e.target.value);
-  };
+  // const onChangeStartTime = (e) => {
+  //   onChangeCueStart(parseFloat(e.target.value));
+  //   console.log(e.target.value);
+  // };
 
-  const onChangeEndTime = (e) => {
-    onChangeCueEnd(parseFloat(e.target.value));
-  };
+  // const onChangeEndTime = (e) => {
+  //   onChangeCueEnd(parseFloat(e.target.value));
+  // };
 
-  const onChangeTimeSpan = (e) => {
-    onChangeCueEnd(cue.startTime + parseFloat(e.target.value));
-  };
+  // const onChangeTimeSpan = (e) => {
+  //   onChangeCueEnd(cue.startTime + parseFloat(e.target.value));
+  // };
 
   return (
     <Grid container spacing={2} className={classes.root}>
@@ -49,7 +52,7 @@ const CueEditor = () => {
             variant="outlined"
             label="Start Time"
             value={cue.startTime}
-            onChange={onChangeStartTime}
+            // onChange={onChangeStartTime}
           />
         </Grid>
         <Grid item>
@@ -57,7 +60,7 @@ const CueEditor = () => {
             variant="outlined"
             label="Show For"
             value={cue.endTime - cue.startTime}
-            onChange={onChangeTimeSpan}
+            // onChange={onChangeTimeSpan}
           />
         </Grid>
         <Grid item>
@@ -65,7 +68,7 @@ const CueEditor = () => {
             variant="outlined"
             label="End Time"
             value={cue.endTime}
-            onChange={onChangeEndTime}
+            // onChange={onChangeEndTime}
           />
         </Grid>
         <Grid item>
@@ -73,7 +76,8 @@ const CueEditor = () => {
             aria-label="Delete"
             edge="end"
             size="small"
-            onClick={onRemoveCue}
+            // onClick={onRemoveCue}
+            onClick={() => dispatch(removeCue(cueIndex))}
           >
             <CloseIcon fontSize="small" />
           </IconButton>

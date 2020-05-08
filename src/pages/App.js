@@ -2,14 +2,11 @@ import React from "react";
 import withRoot from "../withRoot";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { makeStyles } from "@material-ui/styles";
-import Paper from "@material-ui/core/Paper";
+import { Paper, makeStyles } from "@material-ui/core/";
 import VTTEditor from "../components/Editor/VTTEditor";
 import Player from "../components/Player/Player";
 import { CueProvider } from "../common/cue-context";
 import { CuesProvider } from "../common/cues-context";
-import { useSelector, useDispatch } from "react-redux";
-import { onAddCue } from '../store/actions/cue_actions'
 
 const useStyles = makeStyles({
   root: {
@@ -40,11 +37,6 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(onAddCue())
-  }, [])
 
   return (
     <div className={classes.test}>
