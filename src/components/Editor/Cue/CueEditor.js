@@ -1,41 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Grid, TextField, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TimingInput from "./TimingInput";
-import { CueContext } from "../../../common/cue-context";
-import { removeCue } from "../../../store/actions/cue_actions";
+import { removeCue, onChangeCue } from "../../../store/actions/cueActions";
 import { useDispatch } from "react-redux";
 
 const CueEditor = ({ cue, cueIndex }) => {
   const dispatch = useDispatch();
-  const classes = useStyles();
-
-  // const {
-  //   cue,
-  //   onChangeCueStart,
-  //   onChangeCueEnd,
-  //   onChangeCueText,
-  //   onRemoveCue,
-  // } = React.useContext(CueContext);
+  const classes = useStyles()
   const [text, setText] = useState(cue.text);
 
   const onChangeText = (e) => {
     setText(e.target.value);
   };
 
-  // const onChangeStartTime = (e) => {
-  //   onChangeCueStart(parseFloat(e.target.value));
-  //   console.log(e.target.value);
-  // };
+  const onChangeStartTime = (e) => {
+    const newStartTime = parseFloat(e.target.value);
+    const newCue = new VTTCue(newStartTime, cue.endTime, cue.text);
+    dispatch(onChangeCue(newCue, cueIndex));
+  }
 
-  // const onChangeEndTime = (e) => {
-  //   onChangeCueEnd(parseFloat(e.target.value));
-  // };
+  const onChangeTimeSpan = (e) => {
+    const newEndTime = cue.startTime + parseFloat(e.target.value);
+    const newCue = new VTTCue(cue.startTime, newEndTime, cue.text);
+    dispatch(onChangeCue(newCue, cueIndex));
+  }
 
-  // const onChangeTimeSpan = (e) => {
-  //   onChangeCueEnd(cue.startTime + parseFloat(e.target.value));
-  // };
+  const onChangeEndTime = (e) => {
+    const newEndTime = parseFloat(e.target.value);
+    const newCue = new VTTCue(cue.startTime, newEndTime, cue.text);
+    dispatch(onChangeCue(newCue, cueIndex));
+  }
 
   return (
     <Grid container spacing={2} className={classes.root}>
@@ -52,7 +48,7 @@ const CueEditor = ({ cue, cueIndex }) => {
             variant="outlined"
             label="Start Time"
             value={cue.startTime}
-            // onChange={onChangeStartTime}
+            onChange={onChangeStartTime}
           />
         </Grid>
         <Grid item>
@@ -60,7 +56,7 @@ const CueEditor = ({ cue, cueIndex }) => {
             variant="outlined"
             label="Show For"
             value={cue.endTime - cue.startTime}
-            // onChange={onChangeTimeSpan}
+            onChange={onChangeTimeSpan}
           />
         </Grid>
         <Grid item>
@@ -68,7 +64,7 @@ const CueEditor = ({ cue, cueIndex }) => {
             variant="outlined"
             label="End Time"
             value={cue.endTime}
-            // onChange={onChangeEndTime}
+            onChange={onChangeEndTime}
           />
         </Grid>
         <Grid item>
@@ -76,7 +72,6 @@ const CueEditor = ({ cue, cueIndex }) => {
             aria-label="Delete"
             edge="end"
             size="small"
-            // onClick={onRemoveCue}
             onClick={() => dispatch(removeCue(cueIndex))}
           >
             <CloseIcon fontSize="small" />
@@ -119,7 +114,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 6,
   },
   icon: {
-    // marginRight: theme.spacing(1),
     color: "green",
     fontSize: 45,
   },
@@ -129,7 +123,6 @@ const useStyles = makeStyles((theme) => ({
   picture: {
     height: "50px",
     borderRadius: "90%",
-    // marginRight: theme.spacing.unit * 2,
   },
 }));
 
