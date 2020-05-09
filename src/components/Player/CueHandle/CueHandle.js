@@ -49,9 +49,9 @@ CueHandle.propTypes = {
   children: PropTypes.node,
 };
 
-export default function CueHandle({ children }) {
+export default function CueHandle({ cue, cueIndex, children }) {
 
-  const { cue } = React.useContext(CueContext);
+  // const { cue } = React.useContext(CueContext);
   const [pos, setPos] = React.useState({ left: 0, right: 0 });
   const classes = useStyles();
   const { pixelsPerSec, zoomContainerRect } = useZoom();
