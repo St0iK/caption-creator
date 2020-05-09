@@ -1,8 +1,8 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
-import { CuesContext } from "../../common/cues-context";
 import { formatSeconds } from "../../services/timing";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
@@ -18,8 +18,6 @@ const useStyles = makeStyles({
   trackRoot: {
     position: "relative",
     flex: 1,
-    // flex children won't shrink beyond their content. wavesurfer inserts a fixed height
-    //   div that makes a scrollbar appear if we don't tell trackRoot its allowed to shrink as far as it wants
     minHeight: 0,
   },
   audioTrack: {
@@ -45,7 +43,7 @@ TimeTicks.propTypes = {};
 
 export default function TimeTicks() {
   const classes = useStyles();
-  const { cues } = React.useContext(CuesContext);
+  const cues = useSelector((state) => state.cues.cues);
   const [width, setWidth] = useState(0);
 
   // run when the cues change
