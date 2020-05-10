@@ -28,8 +28,18 @@ export function onChangeCue(cue, cueIndex) {
     type: ON_CHANGE_CUE,
     payload: {
       cue,
-      cueIndex
+      cueIndex,
     },
   };
 }
 
+export function onDeltaChange(startDelta, endDelta, cueIndex) {
+  return {
+    type: ON_DELTA_CUE,
+    payload: {
+      startDelta,
+      endDelta,
+      cueIndex,
+    },
+  };
+}

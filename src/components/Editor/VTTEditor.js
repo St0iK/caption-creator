@@ -27,8 +27,7 @@ const VTTEditor = () => {
   return (
     <div className={classes.root}>
       {cues.map((cue, index) => (
-        // WARNING CHANGE key={index} to key={something unique, preferably an id}
-        <CueEditor cue={cue} cueIndex={index} key={index} />
+        <CueEditor cue={cue} cueIndex={index} key={cue.id} />
       ))}
       <Fab
         className={classes.fab}

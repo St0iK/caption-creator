@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/styles";
 import CueHandleLeft from "./CheHandleLeft";
 import CueHandleRight from "./CheHandleRight";
 import CueHandleCenter from "./CueHandleCenter";
-import { CueContext } from "../../../common/cue-context";
 import { useZoom } from "../../ZoomContainer";
 
 const useStyles = makeStyles({
@@ -50,8 +49,6 @@ CueHandle.propTypes = {
 };
 
 export default function CueHandle({ cue, cueIndex, children }) {
-
-  // const { cue } = React.useContext(CueContext);
   const [pos, setPos] = React.useState({ left: 0, right: 0 });
   const classes = useStyles();
   const { pixelsPerSec, zoomContainerRect } = useZoom();
@@ -93,7 +90,9 @@ export default function CueHandle({ cue, cueIndex, children }) {
       return { left, right };
     });
   }, []);
+
   console.log({ pos });
+
   return (
     <div className={classes.cue} style={pos}>
       <div className={classes.borderHandleContainer}>
@@ -101,6 +100,7 @@ export default function CueHandle({ cue, cueIndex, children }) {
         <CueHandleCenter
           className={classes.centerHandle}
           onChange={onSlideCue}
+          cueIndex={cueIndex}
         />
         <CueHandleLeft
           className={clsx(classes.edgeHandle, classes.leftHandle)}

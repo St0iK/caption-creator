@@ -2,8 +2,9 @@ import * as React from "react";
 import clsx from "clsx";
 import * as PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
-import { CueContext } from "../../../common/cue-context";
 import useDragging from "../../../common/use-dragging.hook";
+import { useDispatch } from "react-redux";
+import { onDeltaChange } from "../../../store/actions/cueActions";
 
 const useStyles = makeStyles({
   root: {
@@ -19,9 +20,9 @@ CueHandleCenter.propTypes = {
   className: PropTypes.string,
 };
 
-function CueHandleCenter({ onChange, className }) {
+function CueHandleCenter({ onChange, className, cueIndex }) {
   const classes = useStyles();
-  const { onDeltaCue } = React.useContext(CueContext);
+  const dispatch = useDispatch();
   const [handleRef, setHandleRef] = React.useState();
   const startPosRef = React.useRef(0);
   const prevPosRef = React.useRef(0);
@@ -43,9 +44,9 @@ function CueHandleCenter({ onChange, className }) {
   const onDragEnd = React.useCallback(
     (e) => {
       const d = (e.clientX - startPosRef.current) / pixelsPerSec;
-      onDeltaCue({ startDelta: d, endDelta: d });
+      dispatch(onDeltaChange(d, d, cueIndex));
     },
-    [pixelsPerSec, onDeltaCue]
+    [pixelsPerSec, onDeltaChange]
   );
 
   useDragging(handleRef, { onDragStart, onDragging, onDragEnd });

@@ -1,7 +1,6 @@
 import * as React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
-import { CueProvider } from "../../common/cue-context";
 import CueHandle from "./CueHandle";
 import { useSelector } from "react-redux";
 
@@ -47,16 +46,13 @@ export default function CueTrack() {
     <div className={classes.root}>
       <div className={classes.cueContainer}>
         {cues.map((cue, index) => (
-          // WARNING CHANGE key={index} to key={something unique, preferably an id}
-          // <CueProvider cue={cue} cueIndex={index} key={index}>
-          <CueHandle cue={cue} cueIndex={index} key={index}>
+          <CueHandle cue={cue} cueIndex={index} key={cue.id}>
             <div className={classes.cueContent}>
               <Typography color="inherit" variant="h5" noWrap>
                 {cue.text}
               </Typography>
             </div>
           </CueHandle>
-          // </CueProvider>
         ))}
       </div>
     </div>
