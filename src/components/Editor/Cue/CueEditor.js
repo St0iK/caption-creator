@@ -1,37 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Grid, TextField, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TimingInput from "./TimingInput";
-import { removeCue, onChangeCue } from "../../../store/actions/cueActions";
+import {
+  removeCue,
+  onChangeCue,
+  onChangeCueText,
+} from "../../../store/actions/cueActions";
 import { useDispatch } from "react-redux";
+import { debounce } from "lodash";
 
 const CueEditor = ({ cue, cueIndex }) => {
   const dispatch = useDispatch();
-  const classes = useStyles()
+  const classes = useStyles();
   const [text, setText] = useState(cue.text);
+
+  // https://medium.com/@rajeshnaroth/using-throttle-and-debounce-in-a-react-function-component-5489fc3461b3
+  // https://codesandbox.io/s/functional-component-debounce-l543l?file=/src/index.js
+  const updateCueText = (text) => dispatch(onChangeCueText(cueIndex, text));
+  const debounceTextUpdate = useCallback(
+    debounce((text) => updateCueText(text), 400),
+    []
+  );
+
+  const handleTextAreaBlure = () => {
+    debounceTextUpdate.flush();
+  };
+
+  useEffect(() => {
+    // cancel debounceTextUpdate on Unmount
+    return () => debounceTextUpdate.cancel();
+  }, []);
 
   const onChangeText = (e) => {
     setText(e.target.value);
+    debounceTextUpdate(e.target.value);
   };
 
   const onChangeStartTime = (e) => {
     const newStartTime = parseFloat(e.target.value);
     const newCue = new VTTCue(newStartTime, cue.endTime, cue.text);
     dispatch(onChangeCue(newCue, cueIndex));
-  }
+  };
 
   const onChangeTimeSpan = (e) => {
     const newEndTime = cue.startTime + parseFloat(e.target.value);
     const newCue = new VTTCue(cue.startTime, newEndTime, cue.text);
     dispatch(onChangeCue(newCue, cueIndex));
-  }
+  };
 
   const onChangeEndTime = (e) => {
     const newEndTime = parseFloat(e.target.value);
     const newCue = new VTTCue(cue.startTime, newEndTime, cue.text);
     dispatch(onChangeCue(newCue, cueIndex));
-  }
+  };
 
   return (
     <Grid container spacing={2} className={classes.root}>
@@ -87,6 +110,7 @@ const CueEditor = ({ cue, cueIndex }) => {
           label="Caption text"
           value={text}
           onChange={onChangeText}
+          onBlur={handleTextAreaBlure}
           placeholder="Enter your caption here..."
         />
       </Grid>

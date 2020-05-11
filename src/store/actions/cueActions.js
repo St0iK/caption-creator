@@ -43,3 +43,10 @@ export function onDeltaChange(startDelta, endDelta, cueIndex) {
     },
   };
 }
+
+export function onChangeCueText(index, text) {
+  return {
+    type: ON_CHANGE_CUE_TEXT,
+    payload: { index, text },
+  };
+}

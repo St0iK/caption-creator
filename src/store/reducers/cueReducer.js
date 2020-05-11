@@ -3,6 +3,7 @@ import {
   REMOVE_CUE,
   ON_CHANGE_CUE,
   ON_DELTA_CUE,
+  ON_CHANGE_CUE_TEXT,
 } from "../actions/actionTypes";
 import sortBy from "lodash.sortby";
 import { v4 as uuidv4 } from "uuid";
@@ -14,6 +15,7 @@ const initialCues = {
 const cueReducer = (state = initialCues, action) => {
   const { cues } = state;
   const newCues = [...cues];
+  let updatedCues;
 
   switch (action.type) {
     case ADD_CUE:
@@ -21,7 +23,7 @@ const cueReducer = (state = initialCues, action) => {
         const lastCue = newCues[newCues.length - 1];
         const newCue = new VTTCue(lastCue.endTime, lastCue.endTime + 2, "");
         newCue.id = uuidv4();
-        const updatedCues = newCues.concat(newCue);
+        updatedCues = newCues.concat(newCue);
 
         return {
           ...state,
@@ -36,15 +38,18 @@ const cueReducer = (state = initialCues, action) => {
       };
 
     case REMOVE_CUE:
-      newCues.splice(action.index, 1);
+      // newCues.splice(action.index, 1);
+      updatedCues = newCues.filter((c, i) => i !== action.index);
       return {
         ...state,
-        cues: newCues,
+        cues: updatedCues,
       };
 
     case ON_CHANGE_CUE:
       const { cue, cueIndex } = action.payload;
       newCues[cueIndex] = cue;
+      newCues[cueIndex].id = cues[cueIndex].id;
+
       return {
         ...state,
         cues: sortBy(newCues, ["startTime"]),
@@ -52,7 +57,7 @@ const cueReducer = (state = initialCues, action) => {
 
     case ON_DELTA_CUE:
       const { startDelta, endDelta, cueIndex: index } = action.payload;
-      const currentCue = cues[index];
+      const currentCue = newCues[index];
       let newStartTime = currentCue.startTime + startDelta;
       let newEndTime = currentCue.endTime + endDelta;
 
@@ -71,7 +76,19 @@ const cueReducer = (state = initialCues, action) => {
         ...state,
         cues: sortBy(newCues, ["startTime"]),
       };
-
+    case ON_CHANGE_CUE_TEXT:
+      const { index: textIndex, text } = action.payload;
+      const prevCue = newCues[textIndex];
+      updatedCues = newCues.map((cue, i) => {
+        if (i === textIndex) {
+          const newCue = new VTTCue(prevCue.startTime, prevCue.endTime, text);
+          newCue.id = prevCue.id;
+          return newCue;
+        } else {
+          return cue;
+        }
+      });
+      return { ...state, cues: updatedCues };
     default:
       return state;
   }
