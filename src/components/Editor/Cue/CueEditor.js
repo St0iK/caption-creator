@@ -39,8 +39,13 @@ const CueEditor = ({ cue, cueIndex }) => {
   };
 
   const onChangeStartTime = (e) => {
+    let { startTime, endTime, text } = cue;
+    const showFor = endTime - startTime > 0 ? endTime - startTime : 2;
     const newStartTime = parseFloat(e.target.value);
-    const newCue = new VTTCue(newStartTime, cue.endTime, cue.text);
+    if (endTime - newStartTime <= 0) {
+      endTime = newStartTime + showFor;
+    }
+    const newCue = new VTTCue(newStartTime, endTime, text);
     dispatch(onChangeCue(newCue, cueIndex));
   };
 
@@ -51,8 +56,10 @@ const CueEditor = ({ cue, cueIndex }) => {
   };
 
   const onChangeEndTime = (e) => {
+    let { startTime, text } = cue;
     const newEndTime = parseFloat(e.target.value);
-    const newCue = new VTTCue(cue.startTime, newEndTime, cue.text);
+    if (newEndTime - startTime <= 0) return;
+    const newCue = new VTTCue(startTime, newEndTime, text);
     dispatch(onChangeCue(newCue, cueIndex));
   };
 
