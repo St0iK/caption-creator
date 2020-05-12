@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
   edgeHandle: {
     position: "absolute",
-    cursor: "ew-resize",
+    cursor: "col-resize",
     width: 20,
     top: 0,
     bottom: 0,
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   centerHandle: {
     position: "absolute",
     backgroundColor: "white",
-    cursor: "ew-resize",
+    cursor: "move",
     top: 0,
     left: 0,
     bottom: 0,
@@ -105,10 +105,14 @@ export default function CueHandle({ cue, cueIndex, children }) {
         <CueHandleLeft
           className={clsx(classes.edgeHandle, classes.leftHandle)}
           onChange={onChangeLeft}
+          cueIndex={cueIndex}
+          cue={cue}
         />
         <CueHandleRight
           className={clsx(classes.edgeHandle, classes.rightHandle)}
           onChange={onChangeRight}
+          cueIndex={cueIndex}
+          cue={cue}
         />
       </div>
     </div>
