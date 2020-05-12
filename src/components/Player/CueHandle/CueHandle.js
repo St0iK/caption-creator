@@ -53,7 +53,7 @@ export default function CueHandle({ cue, cueIndex, children }) {
   const classes = useStyles();
   const { pixelsPerSec, zoomContainerRect } = useZoom();
   const containerWidth = zoomContainerRect ? zoomContainerRect.width : 0;
-  console.log(containerWidth);
+  // console.log(containerWidth);
 
   React.useEffect(() => {
     if (Number.isFinite(pixelsPerSec) && Number.isFinite(containerWidth)) {
@@ -91,7 +91,7 @@ export default function CueHandle({ cue, cueIndex, children }) {
     });
   }, []);
 
-  console.log({ pos });
+  // console.log({ pos });
 
   return (
     <div className={classes.cue} style={pos}>

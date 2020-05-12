@@ -5,7 +5,7 @@ import CueHandle from "./CueHandle";
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
-  root: {
+  cueTrackRoot: {
     position: "relative",
     width: "100%",
     height: "100%",
@@ -42,8 +42,9 @@ CueTrack.propTypes = {};
 export default function CueTrack() {
   const classes = useStyles();
   const cues = useSelector((state) => state.cues.cues);
+
   return (
-    <div className={classes.root}>
+    <div className={classes.cueTrackRoot}>
       <div className={classes.cueContainer}>
         {cues.map((cue, index) => (
           <CueHandle cue={cue} cueIndex={index} key={cue.id}>

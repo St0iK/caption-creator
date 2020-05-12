@@ -46,7 +46,7 @@ function CueHandleCenter({ onChange, className, cueIndex }) {
       const d = (e.clientX - startPosRef.current) / pixelsPerSec;
       dispatch(onDeltaChange(d, d, cueIndex));
     },
-    [pixelsPerSec, onDeltaChange]
+    [pixelsPerSec, onDeltaChange, cueIndex]
   );
 
   useDragging(handleRef, { onDragStart, onDragging, onDragEnd });
