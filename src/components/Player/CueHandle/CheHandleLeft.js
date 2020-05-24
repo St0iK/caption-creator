@@ -1,9 +1,10 @@
-import * as React from "react";
+import React from "react";
 import clsx from "clsx";
 import * as PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
-import { CueContext } from "../../../common/cue-context";
 import useDragging from "../../../common/use-dragging.hook";
+import { useDispatch } from "react-redux";
+import { onDeltaChange } from "../../../store/actions/cueActions";
 
 const useStyles = makeStyles({
   root: {
@@ -24,24 +25,35 @@ CueHandleLeft.propTypes = {
   className: PropTypes.string,
 };
 
-function CueHandleLeft({ onChange, className }) {
+function CueHandleLeft({ onChange, className, cueIndex, cue }) {
   const classes = useStyles();
-  const { onDeltaCue } = React.useContext(CueContext);
+  const dispatch = useDispatch();
   const [handleRef, setHandleRef] = React.useState();
   const pixelsPerSec = 200;
 
   const startPosRef = React.useRef(0);
   const prevPosRef = React.useRef(0);
+  const dragThreshold = React.useRef(0);
 
-  const onDragStart = React.useCallback((e) => {
-    startPosRef.current = e.clientX;
-    prevPosRef.current = e.clientX;
-  }, []);
+  const onDragStart = React.useCallback(
+    (e) => {
+      startPosRef.current = e.clientX;
+      prevPosRef.current = e.clientX;
+      dragThreshold.current =
+        -50 + e.clientX + (cue.endTime - cue.startTime) * pixelsPerSec;
+    },
+    [cue]
+  );
 
   const onDragging = React.useCallback(
     (e) => {
-      onChange(e.clientX - prevPosRef.current);
-      prevPosRef.current = e.clientX;
+      if (e.clientX >= dragThreshold.current) {
+        onChange(0);
+        prevPosRef.current = e.clientX;
+      } else {
+        onChange(e.clientX - prevPosRef.current);
+        prevPosRef.current = e.clientX;
+      }
     },
     [onChange]
   );
@@ -49,9 +61,15 @@ function CueHandleLeft({ onChange, className }) {
   const onDragEnd = React.useCallback(
     (e) => {
       const startDelta = (e.clientX - startPosRef.current) / pixelsPerSec;
-      onDeltaCue({ startDelta });
+      if (e.clientX < dragThreshold.current) {
+        dispatch(onDeltaChange(startDelta, 0, cueIndex));
+      } else {
+        const threshold =
+          (dragThreshold.current - startPosRef.current) / pixelsPerSec;
+        dispatch(onDeltaChange(threshold, 0, cueIndex));
+      }
     },
-    [pixelsPerSec, onDeltaCue]
+    [pixelsPerSec, onDeltaChange, cueIndex]
   );
 
   useDragging(handleRef, { onDragStart, onDragging, onDragEnd });

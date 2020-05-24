@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
-import { CuesContext } from "../common/cues-context";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  zoomContainerRoot: {
     position: "relative",
     width: "100%",
     height: "100%",
@@ -29,6 +29,7 @@ ZoomContainer.propTypes = {
 };
 
 export default function ZoomContainer({ children }) {
+  const cues = useSelector((state) => state.cues.cues);
   const classes = useStyles();
   const [pixelsPerSec] = React.useState(200);
   const [zoomContainerRef, setZoomContainerRef] = React.useState();
@@ -39,7 +40,6 @@ export default function ZoomContainer({ children }) {
     }
   };
 
-  const { cues } = React.useContext(CuesContext);
   const duration = getCueDuration(cues);
 
   const width = Number.isFinite(duration)
@@ -63,7 +63,7 @@ export default function ZoomContainer({ children }) {
   );
 
   return (
-    <div className={classes.root}>
+    <div className={classes.zoomContainerRoot}>
       <div
         // pixelsPerSec={pixelsPerSec}
         onMouseUp={onMouseUp}

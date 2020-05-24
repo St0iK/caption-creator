@@ -1,37 +1,66 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Grid, TextField, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import TimingInput from "./TimingInput";
-import { CueContext } from "../../../common/cue-context";
+import {
+  removeCue,
+  onChangeCue,
+  onChangeCueText,
+} from "../../../store/actions/cueActions";
+import { useDispatch } from "react-redux";
+import { debounce } from "lodash";
 
-const CueEditor = () => {
-  const {
-    cue,
-    onChangeCueStart,
-    onChangeCueEnd,
-    onChangeCueText,
-    onRemoveCue,
-  } = React.useContext(CueContext);
+const CueEditor = ({ cue, cueIndex }) => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
   const [text, setText] = useState(cue.text);
 
-  const classes = useStyles();
+  // https://medium.com/@rajeshnaroth/using-throttle-and-debounce-in-a-react-function-component-5489fc3461b3
+  // https://codesandbox.io/s/functional-component-debounce-l543l?file=/src/index.js
+  const updateCueText = (text) => dispatch(onChangeCueText(cueIndex, text));
+  const debounceTextUpdate = useCallback(
+    debounce((text) => updateCueText(text), 400),
+    []
+  );
+
+  const handleTextAreaBlure = () => {
+    debounceTextUpdate.flush();
+  };
+
+  useEffect(() => {
+    // cancel debounceTextUpdate on Unmount
+    return () => debounceTextUpdate.cancel();
+  }, []);
 
   const onChangeText = (e) => {
     setText(e.target.value);
+    debounceTextUpdate(e.target.value);
   };
 
   const onChangeStartTime = (e) => {
-    onChangeCueStart(parseFloat(e.target.value));
-    console.log(e.target.value);
-  };
-
-  const onChangeEndTime = (e) => {
-    onChangeCueEnd(parseFloat(e.target.value));
+    let { startTime, endTime, text } = cue;
+    const showFor = endTime - startTime > 0 ? endTime - startTime : 2;
+    const newStartTime = parseFloat(e.target.value);
+    if (endTime - newStartTime <= 0) {
+      endTime = newStartTime + showFor;
+    }
+    const newCue = new VTTCue(newStartTime, endTime, text);
+    dispatch(onChangeCue(newCue, cueIndex));
   };
 
   const onChangeTimeSpan = (e) => {
-    onChangeCueEnd(cue.startTime + parseFloat(e.target.value));
+    const newEndTime = cue.startTime + parseFloat(e.target.value);
+    const newCue = new VTTCue(cue.startTime, newEndTime, cue.text);
+    dispatch(onChangeCue(newCue, cueIndex));
+  };
+
+  const onChangeEndTime = (e) => {
+    let { startTime, text } = cue;
+    const newEndTime = parseFloat(e.target.value);
+    if (newEndTime - startTime <= 0) return;
+    const newCue = new VTTCue(startTime, newEndTime, text);
+    dispatch(onChangeCue(newCue, cueIndex));
   };
 
   return (
@@ -73,7 +102,7 @@ const CueEditor = () => {
             aria-label="Delete"
             edge="end"
             size="small"
-            onClick={onRemoveCue}
+            onClick={() => dispatch(removeCue(cueIndex))}
           >
             <CloseIcon fontSize="small" />
           </IconButton>
@@ -88,6 +117,7 @@ const CueEditor = () => {
           label="Caption text"
           value={text}
           onChange={onChangeText}
+          onBlur={handleTextAreaBlure}
           placeholder="Enter your caption here..."
         />
       </Grid>
@@ -115,7 +145,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 6,
   },
   icon: {
-    // marginRight: theme.spacing(1),
     color: "green",
     fontSize: 45,
   },
@@ -125,7 +154,6 @@ const useStyles = makeStyles((theme) => ({
   picture: {
     height: "50px",
     borderRadius: "90%",
-    // marginRight: theme.spacing.unit * 2,
   },
 }));
 

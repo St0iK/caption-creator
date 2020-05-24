@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/styles";
 import CueHandleLeft from "./CheHandleLeft";
 import CueHandleRight from "./CheHandleRight";
 import CueHandleCenter from "./CueHandleCenter";
-import { CueContext } from "../../../common/cue-context";
 import { useZoom } from "../../ZoomContainer";
 
 const useStyles = makeStyles({
@@ -23,7 +22,7 @@ const useStyles = makeStyles({
   },
   edgeHandle: {
     position: "absolute",
-    cursor: "ew-resize",
+    cursor: "col-resize",
     width: 20,
     top: 0,
     bottom: 0,
@@ -37,7 +36,7 @@ const useStyles = makeStyles({
   centerHandle: {
     position: "absolute",
     backgroundColor: "white",
-    cursor: "ew-resize",
+    cursor: "move",
     top: 0,
     left: 0,
     bottom: 0,
@@ -49,14 +48,12 @@ CueHandle.propTypes = {
   children: PropTypes.node,
 };
 
-export default function CueHandle({ children }) {
-
-  const { cue } = React.useContext(CueContext);
+export default function CueHandle({ cue, cueIndex, children }) {
   const [pos, setPos] = React.useState({ left: 0, right: 0 });
   const classes = useStyles();
   const { pixelsPerSec, zoomContainerRect } = useZoom();
   const containerWidth = zoomContainerRect ? zoomContainerRect.width : 0;
-  console.log(containerWidth);
+  // console.log(containerWidth);
 
   React.useEffect(() => {
     if (Number.isFinite(pixelsPerSec) && Number.isFinite(containerWidth)) {
@@ -93,7 +90,9 @@ export default function CueHandle({ children }) {
       return { left, right };
     });
   }, []);
-  console.log({ pos });
+
+  // console.log({ pos });
+
   return (
     <div className={classes.cue} style={pos}>
       <div className={classes.borderHandleContainer}>
@@ -101,14 +100,19 @@ export default function CueHandle({ children }) {
         <CueHandleCenter
           className={classes.centerHandle}
           onChange={onSlideCue}
+          cueIndex={cueIndex}
         />
         <CueHandleLeft
           className={clsx(classes.edgeHandle, classes.leftHandle)}
           onChange={onChangeLeft}
+          cueIndex={cueIndex}
+          cue={cue}
         />
         <CueHandleRight
           className={clsx(classes.edgeHandle, classes.rightHandle)}
           onChange={onChangeRight}
+          cueIndex={cueIndex}
+          cue={cue}
         />
       </div>
     </div>

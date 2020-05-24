@@ -2,12 +2,9 @@ import React from "react";
 import withRoot from "../withRoot";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { makeStyles } from "@material-ui/styles";
-import Paper from "@material-ui/core/Paper";
+import { Paper, makeStyles } from "@material-ui/core/";
 import VTTEditor from "../components/Editor/VTTEditor";
 import Player from "../components/Player/Player";
-import { CueProvider } from "../common/cue-context";
-import { CuesProvider } from "../common/cues-context";
 
 const useStyles = makeStyles({
   root: {
@@ -42,16 +39,14 @@ const App = () => {
   return (
     <div className={classes.test}>
       <Header />
-      <CuesProvider>
-        <div className={classes.root}>
-          <Paper square className={classes.drawer}>
-            <VTTEditor />
-          </Paper>
-          <div className={classes.player}>
-            <Player />
-          </div>
+      <div className={classes.root}>
+        <Paper square className={classes.drawer}>
+          <VTTEditor />
+        </Paper>
+        <div className={classes.player}>
+          <Player />
         </div>
-      </CuesProvider>
+      </div>
       <Footer />
     </div>
   );
