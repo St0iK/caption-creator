@@ -6,16 +6,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCue } from "../../store/actions/cueActions";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  VTTEditorContainer: {
     flex: 1,
-    width: 400,
+    // width: 400,
     padding: 10,
-    marginBottom: "5rem",
+    // marginBottom: "5rem",
+    overflowY: "scroll",
   },
   fab: {
     position: "absolute",
-    left: "300px",
-    top: "85%",
+    // left: "300px",
+    // top: "85%",
+    // top: "85%",
+    // left: "83%",
+    bottom: "5%",
+    right: "5%",
   },
 }));
 
@@ -25,7 +30,7 @@ const VTTEditor = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.VTTEditorContainer}>
       {cues.map((cue, index) => (
         <CueEditor cue={cue} cueIndex={index} key={cue.id} />
       ))}

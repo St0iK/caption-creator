@@ -37,7 +37,7 @@ const Player = (props) => {
         <div className={classes.video}>
           <ReactPlayer
             url="https://www.dropbox.com/s/8zw5wq5ysa7o3di/goodCatBadCat.mp4?dl=0"
-            playing
+            playing={false}
             controls={true}
           />
         </div>
