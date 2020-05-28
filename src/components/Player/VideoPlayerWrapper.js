@@ -5,6 +5,7 @@ import { withResizeDetector } from "react-resize-detector";
 const VideoPlayerWrapper = ({ width, height }) => {
   const W = width - 20;
   const H = height - 20;
+  // let W, H;
 
   return (
     <ReactPlayer
