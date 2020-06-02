@@ -14,3 +14,16 @@ Automatically extract caption/subtitles for the video using **Cloud Speech-to-Te
 - [ ] Using Cloud Functions & ffmpeg convert Audio from Video
 - [ ] Store Audio file on GCP storage
 - [ ] Send Audio file to GCP Speech to Text API
+
+
+
+## Main Technologies
+
+### Client Side
+
+- [x] **[React](https://github.com/facebook/react)**
+- [x] **[Redux](https://github.com/reactjs/redux)**
+- [x] **[Material UI](https://material-ui.com/)**
+
+### Server Side
+- [x] **[WIP](https://github.com/facebook/react)**
