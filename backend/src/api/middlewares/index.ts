@@ -1,7 +1,5 @@
-import attachCurrentUser from './attachCurrentUser';
-import isAuth from './isAuth';
+import sample from './sample';
 
 export default {
-  attachCurrentUser,
-  isAuth,
+  sample,
 };
