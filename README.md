@@ -2,8 +2,6 @@
 
 A tool for creating and editing **Web Video Text Track (WebVTT)** files in your browser.
 
-If you want to embed images, this is how you do it:
-
 ![Image of Yaktocat](https://i.imgur.com/SlHmAgr.png)
 
 **Backend**
