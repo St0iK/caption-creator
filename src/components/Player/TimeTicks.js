@@ -92,7 +92,7 @@ export default function TimeTicks() {
     );
   }
 
-  function Tick({ x, height, text, fontSize }) {
+  function Tick({ x, height, text }) {
     const textY = (height + 12) / 2;
     return (
       <React.Fragment>

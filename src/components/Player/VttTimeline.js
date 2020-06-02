@@ -1,10 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
-// import { CuesContext } from "../../common/cues-context";
-// import { CueProvider } from "../../common/cue-context";
-// import CueEditor from "../Editor/Cue/CueEditor";
-// import { formatSeconds } from "../../services/timing";
-// import { useEffect, useState } from "react";
 import CueTrack from "./CueTrack";
 import TimeTicks from "./TimeTicks";
 import ZoomContainer from "../ZoomContainer";
@@ -48,18 +43,6 @@ VttTimeline.propTypes = {};
 
 export default function VttTimeline() {
   const classes = useStyles();
-  // const { cues } = React.useContext(CuesContext);
-  // const cues = useSelector((state) => state.cues.cues);
-
-  // const [width, setWidth] = useState(0);
-
-  // // run when the cues change
-  // useEffect(() => {
-  //   if (cues.length) {
-  //     const lastCue = cues[cues.length - 1];
-  //     setWidth(lastCue.endTime * 200);
-  //   }
-  // }, [cues]);
 
   return (
     <ZoomContainer>

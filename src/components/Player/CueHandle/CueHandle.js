@@ -91,8 +91,6 @@ export default function CueHandle({ cue, cueIndex, children }) {
     });
   }, []);
 
-  // console.log({ pos });
-
   return (
     <div className={classes.cue} style={pos}>
       <div className={classes.borderHandleContainer}>
