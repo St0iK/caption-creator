@@ -5,6 +5,7 @@
   "main": "src/app.ts",
   "scripts": {
     "build": "tsc",
+    "run-build": "node build/app.js",
     "heroku-postbuild": "npm run build",
     "start": "nodemon",
     "inspect": "nodemon --inspect src/app.ts",
