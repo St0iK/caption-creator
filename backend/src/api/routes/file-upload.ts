@@ -3,7 +3,7 @@ import middlewares from '../middlewares';
 const route = Router();
 import path from 'path';
 import multer from 'multer';
-
+// https://www.npmjs.com/package/multer-google-storage
 const upload = multer().array('imgCollection')
 
 export default (app: Router) => {

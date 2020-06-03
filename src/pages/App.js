@@ -67,10 +67,10 @@ const App = () => {
     formData.append('folder', 'folder-name')
 
     console.log({ formData });
-    // axios.post(`${process.env.REACT_APP_API_ENDPOINT}/`, formData, {
-    // }).then(res => {
-    //   console.log(res.data)
-    // })
+    axios.post('http://localhost:5000/', formData, {
+    }).then(res => {
+      console.log(res.data)
+    })
   }
 
 
