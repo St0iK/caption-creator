@@ -61,5 +61,16 @@ export default {
   emails: {
     apiKey: process.env.MAILGUN_API_KEY,
     domain: process.env.MAILGUN_DOMAIN
+  },
+  /**
+   * Google Cloud Storage
+   */
+  googleCloudStorage: {
+    email: "jstoikidis@gmail.com",
+    videoUpload: {
+      keyFilename: "./src/config/videocaption-1585925400500-ca73786b890b.json",
+      projectId: "videocaption-1585925400500",
+      bucket: "caption-creator-video-upload",
+    }
   }
 };
