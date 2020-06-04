@@ -24,7 +24,7 @@ export default (app: Router) => {
   route.post('/video', uploadHandler.any(), async (req: Request, res: Response, next: any) => {
     Logger.info(req.files);
     const { path } = JSON.parse(req.files);
-    Logger.info(path);
+    Logger.info(req.files.path);
     try {
       await ffmpeg(path)
         .setFfmpegPath(ffmpegStatic.path)
