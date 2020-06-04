@@ -23,10 +23,10 @@ export default (app: Router) => {
 
   route.post('/video', uploadHandler.any(), async (req: Request, res: Response, next: any) => {
     Logger.info(req.files);
-    const { path: uploadedFilePath } = req.files
-    Logger.info(uploadedFilePath);
+    const { path } = JSON.parse(req.files);
+    Logger.info(path);
     try {
-      await ffmpeg(uploadedFilePath)
+      await ffmpeg(path)
         .setFfmpegPath(ffmpegStatic.path)
         .audioChannels(1)
         .audioFrequency(16000)
