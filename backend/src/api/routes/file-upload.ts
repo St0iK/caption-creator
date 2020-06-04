@@ -4,6 +4,9 @@ const route = Router();
 import multer from 'multer';
 import MulterGoogleCloudStorage from 'multer-google-storage';
 import config from '../../config';
+import ffmpeg from 'fluent-ffmpeg';
+import ffmpegStatic from 'ffmpeg-static';
+
 
 const uploadHandler = multer({
   storage: new MulterGoogleCloudStorage({
@@ -18,8 +21,32 @@ export default (app: Router) => {
 
   app.use('/upload', route);
 
-  route.post('/video', uploadHandler.any(), function (req: Request, res: Response, next: any) {
+  route.post('/video', uploadHandler.any(), async (req: Request, res: Response, next: any) => {
     Logger.info(req.files);
+    const { path: uploadedFilePath } = req.files
+    Logger.info(uploadedFilePath);
+    try {
+      await ffmpeg(uploadedFilePath)
+        .setFfmpegPath(ffmpegStatic.path)
+        .audioChannels(1)
+        .audioFrequency(16000)
+        .format('flac')
+        .output('./yoyoyo')
+        .on('progress', (progress) => {
+          Logger.info(`[ffmpeg] ${JSON.stringify(progress)}`);
+        })
+        .on('error', (err) => {
+          Logger.info(`[ffmpeg] error: ${err.message}`);
+        })
+        .on('end', () => {
+          Logger.verbose('[ffmpeg] finished');
+        })
+    } catch (e) {
+      Logger.info(e);
+    }
+
+
+
     res.json(req.files);
   });
 };

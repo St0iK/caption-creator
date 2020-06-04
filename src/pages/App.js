@@ -46,13 +46,12 @@ const useStyles = makeStyles({
 const App = () => {
   const classes = useStyles();
 
-
-  const [imgCollection, setImgCollection] = useState('')
+  const [videoCollection, setVideoCollection] = useState('')
 
   const onFileChange = (files) => {
     let items = files.map(fileItem => fileItem.file)
     // @ts-ignore
-    setImgCollection([...imgCollection, items])
+    setVideoCollection([...videoCollection, items])
   }
 
   const onSubmit = (e) => {
@@ -60,14 +59,14 @@ const App = () => {
 
     var formData = new FormData()
 
-    for (let img in imgCollection[0]) {
-      formData.append('imgCollection', imgCollection[0][img])
+    for (let img in videoCollection[0]) {
+      formData.append('videoCollection', videoCollection[0][img])
     }
 
     formData.append('folder', 'folder-name')
 
     console.log({ formData });
-    axios.post('http://localhost:5000/', formData, {
+    axios.post('http://localhost:5000/api/upload/video', formData, {
     }).then(res => {
       console.log(res.data)
     })
@@ -94,7 +93,7 @@ const App = () => {
         </div>
         <div className="filepond-wrapper">
           <FilePond
-            files={imgCollection}
+            files={videoCollection}
             allowMultiple={true}
             server={null}
             instantUpload={false}
