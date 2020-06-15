@@ -27,3 +27,4 @@ yarn-error.log*
 /.idea/workspace.xml
 /.vscode
 /backend/src/config/*.json
+backend/uploads/*
