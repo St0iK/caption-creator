@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     width: 400,
     padding: 10,
-    marginBottom: "5rem",
+    marginBottom: "5rem"
   },
   fab: {
     position: "absolute",

@@ -6,6 +6,7 @@ import MulterGoogleCloudStorage from 'multer-google-storage';
 import config from '../../config';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
+const fileUpload = require('express-fileupload');
 
 
 const uploadHandler = multer({
@@ -20,11 +21,18 @@ const uploadHandler = multer({
 export default (app: Router) => {
 
   app.use('/upload', route);
+  app.use(fileUpload());
 
   route.post('/video', uploadHandler.any(), async (req: Request, res: Response, next: any) => {
-    Logger.info(req.files);
-    const { path } = JSON.parse(req.files);
-    Logger.info(req.files.path);
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).send('No files were uploaded.');
+    }
+
+    const [file] = req.files;
+
+    const { path } = file;
+    Logger.info(path);
+
     try {
       await ffmpeg(path)
         .setFfmpegPath(ffmpegStatic.path)
@@ -45,8 +53,6 @@ export default (app: Router) => {
       Logger.info(e);
     }
 
-
-
-    res.json(req.files);
+    res.json(file);
   });
 };

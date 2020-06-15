@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     height: 48,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: "#f582ae",
     color: "white",
     zIndex: 1,
     padding: "0 20px",

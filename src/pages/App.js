@@ -23,12 +23,14 @@ const useStyles = makeStyles({
     minHeight: 0,
     minWidth: 0,
     height: "100%",
+    color: '#172c66'
   },
   drawer: {
     display: "flex",
     flexDirection: "column",
     height: "100%",
     overflowY: "scroll",
+    backgroundColor: "#fef6e4",
   },
   player: {
     padding: 8,
@@ -40,6 +42,7 @@ const useStyles = makeStyles({
     height: "100%;",
     display: "flex",
     flexDirection: "column",
+    backgroundColor: "#fef6e4"
   },
 });
 
@@ -49,9 +52,9 @@ const App = () => {
   const [videoCollection, setVideoCollection] = useState('')
 
   const onFileChange = (files) => {
-    let items = files.map(fileItem => fileItem.file)
+    let [first] = files
     // @ts-ignore
-    setVideoCollection([...videoCollection, items])
+    setVideoCollection(first)
   }
 
   const onSubmit = (e) => {
@@ -59,10 +62,7 @@ const App = () => {
 
     var formData = new FormData()
 
-    for (let img in videoCollection[0]) {
-      formData.append('videoCollection', videoCollection[0][img])
-    }
-
+    formData.append('videoCollection', videoCollection.file)
     formData.append('folder', 'folder-name')
 
     console.log({ formData });
@@ -94,7 +94,7 @@ const App = () => {
         <div className="filepond-wrapper">
           <FilePond
             files={videoCollection}
-            allowMultiple={true}
+            allowMultiple={false}
             server={null}
             instantUpload={false}
             onupdatefiles={(fileItems) => onFileChange(fileItems)}>

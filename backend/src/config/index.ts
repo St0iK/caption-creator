@@ -68,7 +68,7 @@ export default {
   googleCloudStorage: {
     email: "jstoikidis@gmail.com",
     videoUpload: {
-      keyFilename: "./src/config/videocaption-1585925400500-ca73786b890b.json",
+      keyFilename: "./src/config/videocaption-1585925400500-14fa798a6a66.json",
       projectId: "videocaption-1585925400500",
       bucket: "caption-creator-video-upload",
     }

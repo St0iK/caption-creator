@@ -8,10 +8,10 @@ const Header = ({ classes }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="primary">
+      <AppBar position="static" className={classes.root}>
         <Toolbar>
-          <Typography variant="h6" color="inherit">
-            BrightCove Caption generator
+          <Typography variant="h6" className={classes.cc}>
+            Caption Creator
           </Typography>
         </Toolbar>
       </AppBar>
@@ -20,7 +20,10 @@ const Header = ({ classes }) => {
 };
 
 const styles = (theme) => ({
-  root: {},
+  root: {
+    backgroundColor: '#f582ae',
+    color: '#172c66'
+  },
   grow: {
     flexGrow: 1,
     display: "flex",
