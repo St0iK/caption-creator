@@ -31,6 +31,8 @@
   ],
   "author": "Dimitrios Stoikidis",
   "dependencies": {
+    "@google-cloud/speech": "^4.0.0",
+    "@google-cloud/storage": "^5.1.0",
     "agenda": "^2.0.2",
     "agendash": "^1.0.0",
     "argon2": "^0.21.0",

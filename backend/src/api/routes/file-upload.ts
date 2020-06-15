@@ -8,22 +8,16 @@ import config from '../../config';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
 import convertVideo from './ffmpegHelper';
-const fileUpload = require('express-fileupload');
+import { GCPUploader } from '../../services/GCPUploader';
+import { GCPSpeechToText } from '../../services/GCPSpeechToText';
+const { Storage } = require('@google-cloud/storage');
+const speech = require('@google-cloud/speech');
+const client = new speech.SpeechClient();
 
-
-// const uploadHandler = multer({
-//   storage: new MulterGoogleCloudStorage({
-//     email: config.googleCloudStorage.email,
-//     keyFilename: config.googleCloudStorage.videoUpload.keyFilename,
-//     projectId: config.googleCloudStorage.videoUpload.projectId,
-//     bucket: config.googleCloudStorage.videoUpload.bucket,
-//   })
-// });
 
 export default (app: Router) => {
 
   app.use('/upload', route);
-  app.use(fileUpload());
 
   route.post('/video', upload.any(), async (req: Request, res: Response, next: any) => {
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -33,12 +27,22 @@ export default (app: Router) => {
     const [file] = req.files;
 
     const { path } = file;
+
     Logger.info(path);
 
     try {
-      await convertVideo(path);
-    } catch {
-      Logger.error('Oppps!');
+      const storage = new Storage();
+      const audioFilePath: string = await convertVideo(path);
+      const gcpUploader: IUploader = new GCPUploader('caption-creator-video-upload', storage);
+      const uploadResult = await gcpUploader.uploadFile(audioFilePath);
+
+      const uri = 'gs://caption-creator-video-upload/export.flac';
+      const gcpSpeechToText = new GCPSpeechToText(uri, client);
+      Logger.info('Starting audio convert');
+      await gcpSpeechToText.convertAudio()
+      Logger.info('audio convert Done ✅');
+    } catch (err) {
+      Logger.error(err);
     }
 
 
