@@ -1,7 +1,7 @@
 {
   "name": "bulletproof-nodejs",
   "version": "1.0.0",
-  "description": "Bulletproof node.js",
+  "description": "Caption Creator Backend",
   "main": "src/app.ts",
   "scripts": {
     "build": "tsc",
@@ -14,10 +14,6 @@
     "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",
     "lint:js": "npm run lint:eslint src/",
     "lint:fix": "npm run lint:js -- --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/santiq/bulletproof-nodejs.git"
   },
   "keywords": [
     "boilerplay",

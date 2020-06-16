@@ -35,7 +35,7 @@ export default (app: Router) => {
       const audioFilePath: string = await convertVideo(path);
       const gcpUploader: IUploader = new GCPUploader('caption-creator-video-upload', storage);
       const uploadResult = await gcpUploader.uploadFile(audioFilePath);
-
+      console.log({ uploadResult });
       const uri = 'gs://caption-creator-video-upload/export.flac';
       const gcpSpeechToText = new GCPSpeechToText(uri, client);
       Logger.info('Starting audio convert');
