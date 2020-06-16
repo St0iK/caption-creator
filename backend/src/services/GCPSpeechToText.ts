@@ -38,14 +38,13 @@ class GCPSpeechToText {
     console.log({ operation });
     // Get a Promise representation of the final result of the job
     const [response] = await operation.promise();
-    console.log({ response });
-    console.log(response.results);
-
-    const transcription = response.results
-      // .map(result => result.alternatives[0].words)
-      .map(result => console.log(result.alternatives[0]))
-      .join('\n');
-    console.log(`Transcription: ${transcription}`);
+    // console.log(response.results[0].alternatives[0].words);
+    return response.results[0].alternatives[0].words;
+    // const transcription = response.results
+    //   // .map(result => result.alternatives[0].words)
+    //   .map(result => console.log(result.alternatives[0]))
+    //   .join('\n');
+    // console.log(`Transcription: ${transcription}`);
   }
 }
 

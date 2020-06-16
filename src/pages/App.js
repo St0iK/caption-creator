@@ -6,7 +6,7 @@ import { Paper, makeStyles } from "@material-ui/core/";
 import VTTEditor from "../components/Editor/VTTEditor";
 import Player from "../components/Player/Player";
 import axios from 'axios';
-
+import { getCuesFromWords } from '../services/VttGenerator';
 import { FilePond, registerPlugin } from "react-filepond"
 import "filepond/dist/filepond.min.css"
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation"
@@ -69,6 +69,8 @@ const App = () => {
     axios.post('http://localhost:5000/api/upload/video', formData, {
     }).then(res => {
       console.log(res.data)
+      const c = getCuesFromWords(res.data);
+      console.log({ c });
     })
   }
 

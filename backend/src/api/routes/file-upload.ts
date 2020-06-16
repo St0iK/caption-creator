@@ -32,15 +32,18 @@ export default (app: Router) => {
 
     try {
       const storage = new Storage();
-      const audioFilePath: string = await convertVideo(path);
-      const gcpUploader: IUploader = new GCPUploader('caption-creator-video-upload', storage);
-      const uploadResult = await gcpUploader.uploadFile(audioFilePath);
-      console.log({ uploadResult });
+      //const audioFilePath: string = await convertVideo(path);
+      //const gcpUploader: IUploader = new GCPUploader('caption-creator-video-upload', storage);
+      //const uploadResult = await gcpUploader.uploadFile(audioFilePath);
+      //console.log({ uploadResult });
       const uri = 'gs://caption-creator-video-upload/export.flac';
       const gcpSpeechToText = new GCPSpeechToText(uri, client);
       Logger.info('Starting audio convert');
-      await gcpSpeechToText.convertAudio()
+      const r = await gcpSpeechToText.convertAudio()
+      console.log({ r });
+      return r;
       Logger.info('audio convert Done ✅');
+
     } catch (err) {
       Logger.error(err);
     }
