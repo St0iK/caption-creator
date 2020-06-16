@@ -17,6 +17,8 @@ class GCPSpeechToText {
       encoding: encoding,
       sampleRateHertz: sampleRateHertz,
       languageCode: languageCode,
+      enableWordTimeOffsets: true,
+      enableAutomaticPunctuation: true,
     };
 
     const audio = {
@@ -40,7 +42,8 @@ class GCPSpeechToText {
     console.log(response.results);
 
     const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
+      // .map(result => result.alternatives[0].words)
+      .map(result => console.log(result.alternatives[0]))
       .join('\n');
     console.log(`Transcription: ${transcription}`);
   }
