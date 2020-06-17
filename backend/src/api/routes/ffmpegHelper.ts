@@ -5,15 +5,16 @@ import ffmpegStatic from 'ffmpeg-static';
 Logger.info('FFMPEG is about to run !');
 
 const convertVideo = (path): Promise<string> => {
+
+  const [, audioFileName] = path.split('/');
+  const flacAudioFileName = `${audioFileName}.flac`;
   return new Promise((resolve, reject) => {
-    Logger.info(ffmpegStatic);
-    // ffmpeg('./file_example_MOV_1920_2_2MB.mov')
     ffmpeg(path)
       .setFfmpegPath(ffmpegStatic)
       .audioChannels(1)
       .audioFrequency(16000)
       .format('flac')
-      .saveToFile('./export.flac')
+      .saveToFile(flacAudioFileName)
       .on('progress', (progress) => {
         Logger.info(`[ffmpeg] ${JSON.stringify(progress)}`);
       })
@@ -23,7 +24,7 @@ const convertVideo = (path): Promise<string> => {
       })
       .on('end', () => {
         Logger.verbose('[ffmpeg] finished');
-        resolve('./export.flac')
+        resolve(flacAudioFileName)
       })
 
   });
