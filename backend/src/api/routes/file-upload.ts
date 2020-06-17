@@ -15,6 +15,7 @@ export default (app: Router) => {
   app.use('/upload', route);
 
   route.post('/video', upload.any(), async (req: Request, res: Response, next: any) => {
+    req.setTimeout(500000);
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send('No files were uploaded.');
     }
