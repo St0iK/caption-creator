@@ -1,3 +1,4 @@
+
 export function getCuesFromWords(wordsList) {
   console.log({ wordsList });
   let cursor = 0;
@@ -51,7 +52,14 @@ function parseTimeUnit(unit) {
   return isNaN(parsed) ? 0 : parsed;
 }
 
+// type speechV2TimeRepresentation = {
+//   seconds: string;
+//   nanos?: string;
+// }
 // timeString is a string in the format "10.500s"
 function parseGoogleTime(timeString) {
-  return parseFloat(timeString.slice(0, -1));
+  console.log({ timeString })
+  const timeConverted = `${timeString.seconds}.${String(timeString.nanos).substr(0, 3)}`
+  console.log({ timeConverted })
+  return parseFloat(timeConverted.slice(0, -1));
 }

@@ -50,3 +50,12 @@ export function onChangeCueText(index, text) {
     payload: { index, text },
   };
 }
+
+export function onChangeCues(cues) {
+  return {
+    type: ON_CHANGE_CUES,
+    payload: {
+      cues
+    },
+  };
+}

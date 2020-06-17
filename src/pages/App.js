@@ -12,6 +12,8 @@ import "filepond/dist/filepond.min.css"
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation"
 import FilePondPluginImagePreview from "filepond-plugin-image-preview"
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+import { useSelector, useDispatch } from "react-redux";
+import { onChangeCues } from "../store/actions/cueActions";
 
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
@@ -48,7 +50,7 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const [videoCollection, setVideoCollection] = useState('')
 
   const onFileChange = (files) => {
@@ -69,8 +71,8 @@ const App = () => {
     axios.post('http://localhost:5000/api/upload/video', formData, {
     }).then(res => {
       console.log(res.data)
-      const c = getCuesFromWords(res.data);
-      console.log({ c });
+      const cues = getCuesFromWords(res.data);
+      dispatch(onChangeCues(cues))
     })
   }
 

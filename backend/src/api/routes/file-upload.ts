@@ -40,12 +40,10 @@ export default (app: Router) => {
       const gcpSpeechToText = new GCPSpeechToText(uri, client);
       Logger.info('Starting audio convert');
       const r = await gcpSpeechToText.convertAudio()
-      console.log({ r });
-      return r;
       Logger.info('audio convert Done ✅');
-
+      return res.json(r)
     } catch (err) {
-      Logger.error(err);
+      return res.status(400).send(err);
     }
 
 

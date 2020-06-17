@@ -2,6 +2,7 @@ import {
   ADD_CUE,
   REMOVE_CUE,
   ON_CHANGE_CUE,
+  ON_CHANGE_CUES,
   ON_DELTA_CUE,
   ON_CHANGE_CUE_TEXT,
 } from "../actions/actionTypes";
@@ -53,6 +54,14 @@ const cueReducer = (state = initialCues, action) => {
       return {
         ...state,
         cues: sortBy(newCues, ["startTime"]),
+      };
+
+    case ON_CHANGE_CUES:
+      const { cues: updatedCues } = action.payload;
+      console.log({ updatedCues });
+      return {
+        ...state,
+        cues: sortBy(updatedCues, ["startTime"]),
       };
 
     case ON_DELTA_CUE:
