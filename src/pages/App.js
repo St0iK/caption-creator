@@ -1,5 +1,5 @@
-import React from "react";
-import GridLayout from "react-grid-layout";
+import React, { useEffect, useRef, createRef } from "react";
+// import GridLayout from "react-grid-layout";
 import useWindowSize from "../common/useWindowSize";
 import withRoot from "../withRoot";
 import Header from "../components/Header";
@@ -8,6 +8,7 @@ import VTTEditor from "../components/Editor/VTTEditor";
 import VttTimeline from "../components/Player/VttTimeline";
 import Player from "../components/Player/VideoPlayerWrapper";
 import { Resizable } from "re-resizable";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   appWrapper: {
@@ -64,67 +65,189 @@ const useStyles = makeStyles({
     background: "#f0f0f0",
     margin: "4px",
   },
-  wrapperStyle: {
-    display: "flex",
-    flexDirection: "column",
-  },
   resizableWrapper: {
     display: "flex",
     flexWrap: "wrap",
     flexFlow: "raw",
     justifyContent: "space-between",
     flex: 1,
+    overflow: "hidden",
   },
-  footerStyle: {
-    width: "100%",
-    minHeight: "5vh",
-    backgroundColor: "grey",
+  containerStyle: {
+    display: "flex",
+    minHeight: "100vh",
+    flexDirection: "column",
+  },
+  resizableStyle: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "solid 1px #ddd",
+    background: "#f0f0f0",
+    margin: "4px",
   },
 });
 
-const style = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  border: "solid 1px #ddd",
-  background: "#f0f0f0",
-  margin: "4px",
-};
+// const resizableStyle = {
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+//   border: "solid 1px #ddd",
+//   background: "#f0f0f0",
+//   margin: "4px",
+// };
 
-const wrapperStyle = {
-  display: "flex",
-  flexDirection: "column",
-  // margin:'auto'
-};
+// const resizableWrapper = {
+//   display: "flex",
+//   flexWrap: "wrap",
+//   flexFlow: "raw",
+//   justifyContent: "space-between",
+//   flex: 1,
+//   overflow: "hidden",
+// };
 
-const resizableWrapper = {
-  display: "flex",
-  flexWrap: "wrap",
-  flexFlow: "raw",
-  justifyContent: "space-between",
-  flex: 1,
-  // maxWidth: "98.5vw",
-  overflow: "hidden",
-};
-
-const footerStyle = {
-  width: "100%",
-  minHeight: "64px",
-  backgroundColor: "grey",
-};
-
-const containerStyle = {
-  display: "flex",
-  minHeight: "100vh",
-  flexDirection: "column",
-};
+// const containerStyle = {
+//   display: "flex",
+//   minHeight: "100vh",
+//   flexDirection: "column",
+// };
 
 const App = (props) => {
   const classes = useStyles();
   const size = useWindowSize();
+  const playerRef = useRef();
+  const cues = useSelector((state) => state.cues.cues);
+  // console.log(cues);
+  const refsArray = useRef([]);
+  refsArray.current = cues.map(() => createRef());
+  useEffect(() => console.log("re-render"));
+
+  // console.log(refsArray);
+  /** BRING THE SCROLL METHODS: */
+  let keepTime;
+  let currentCueIndex = useRef(undefined);
+
+  const playFunk = () => {
+    // console.log("play fired");
+    // console.log(`currentTime: ${playerRef.current.currentTime}`);
+
+    keepTime = setInterval(() => {
+      let currentTime = playerRef.current.currentTime;
+      // console.log(currentCueIndex);
+      if (!currentCueIndex.current) currentCueIndex.current = 0;
+      // console.log(cues[currentCueIndex.current]);
+      console.log(
+        `currentTime:${playerRef.current.currentTime}, currentCueIndex:${
+          currentCueIndex.current
+        }, startTime:${cues[currentCueIndex.current].startTime}`
+      );
+      if (
+        cues.length > 0 &&
+        currentTime >= cues[currentCueIndex.current].startTime &&
+        currentTime <= cues[currentCueIndex.current].endTime
+      ) {
+        // console.log("current from 172 is " + currentCueIndex.current);
+        refsArray.current[currentCueIndex.current].current.scrollIntoView({
+          block: "end",
+          behavior: "smooth",
+        });
+        if (currentCueIndex.current < cues.length - 1) {
+          currentCueIndex.current++;
+          // console.log("current from 172 is " + currentCueIndex.current);
+        }
+        // refsArray.current[currentCueIndex.current].current.scrollIntoView({
+        //   block: "end",
+        //   behavior: "smooth",
+        // });
+      }
+    }, 1000);
+  };
+
+  const seekFunk = () => {
+    if (cues.length > 0) {
+      let minIndex = 0;
+      let maxIndex = cues.length - 1;
+      let midIndex = Math.floor((maxIndex - minIndex) / 2);
+      console.log(
+        `minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
+      );
+
+      let currentTime = playerRef.current.currentTime;
+      if (
+        currentTime >= cues[minIndex].startTime &&
+        currentTime <= cues[minIndex].endTime
+      ) {
+        currentCueIndex.current = minIndex;
+        refsArray.current[currentCueIndex.current].current.scrollIntoView();
+        console.log(
+          `the index is the minIndex: ${currentCueIndex.current}, SCROLL(!)`
+        );
+        return;
+      }
+      if (
+        currentTime >= cues[maxIndex].startTime &&
+        currentTime <= cues[maxIndex].endTime
+      ) {
+        currentCueIndex.current = maxIndex;
+        refsArray.current[currentCueIndex.current].current.scrollIntoView();
+        console.log(
+          `the index is the maxIndex: ${currentCueIndex.current}, SCROLL(!)`
+        );
+        return;
+      }
+
+      do {
+        if (cues[midIndex].startTime >= currentTime) {
+          maxIndex = midIndex;
+          midIndex = minIndex + Math.floor((maxIndex - minIndex) / 2);
+          console.log(
+            `IF LOOP:minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
+          );
+        } else {
+          minIndex = midIndex;
+          midIndex = minIndex + Math.floor((maxIndex - minIndex) / 2);
+          console.log(
+            `ELSE LOOP:minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
+          );
+        }
+      } while (maxIndex - minIndex > 3);
+      console.log(
+        `minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
+      );
+
+      for (let i = minIndex; i < maxIndex; i++) {
+        if (
+          currentTime >= cues[i].startTime &&
+          currentTime <= cues[i].endTime
+        ) {
+          currentCueIndex.current = i;
+        }
+      }
+      if (currentCueIndex.current) {
+        refsArray.current[currentCueIndex.current].current.scrollIntoView();
+      }
+      // console.log(currentCueIndex.current);
+    }
+  };
+
+  useEffect(
+    (e) => {
+      playerRef.current.addEventListener("seeked", seekFunk);
+      playerRef.current.addEventListener("play", playFunk);
+      playerRef.current.addEventListener("pause", () =>
+        clearInterval(keepTime)
+      );
+      return () => {
+        playerRef.current.removeEventListener("seeked", seekFunk);
+        playerRef.current.removeEventListener("play", playFunk);
+      };
+    },
+    [cues, seekFunk]
+  );
+
   return (
     <>
-      <div style={containerStyle}>
+      <div className={classes.containerStyle}>
         <main
           style={{
             flex: "1",
@@ -132,15 +255,14 @@ const App = (props) => {
         >
           <Header />
 
-          <div style={resizableWrapper}>
+          <div className={classes.resizableWrapper}>
             <Resizable
-              style={style}
+              // style={resizableStyle}
+              className={classes.resizableStyle}
               minWidth={400}
               minHeight={200}
               maxWidth={"98vw"}
-              // maxHeight={"93vh"}
-              maxHeight={size.height - 67 - 150}
-              //window.height - header - vttCueEditor - margins
+              maxHeight={size.height - 80 - 150}
               grid={[10, 10]}
               defaultSize={{
                 width: "60vw",
@@ -148,17 +270,17 @@ const App = (props) => {
               }}
             >
               <Paper square className={classes.cueEditorContainer}>
-                <VTTEditor />
+                <VTTEditor refsArray={refsArray} ref={refsArray} />
               </Paper>
             </Resizable>
+
             <Resizable
-              style={style}
+              // style={resizableStyle}
+              className={classes.resizableStyle}
               minWidth={200}
               minHeight={200}
               maxWidth={"98vw"}
-              // maxHeight={"calc(94vh - 64px)"}
-              // maxHeight={"94vh"}
-              maxHeight={size.height - 67 - 150}
+              maxHeight={size.height - 80 - 150}
               grid={[10, 10]}
               defaultSize={{
                 width: "38vw",
@@ -174,7 +296,7 @@ const App = (props) => {
                   height: "100%",
                 }}
               >
-                <Player />
+                <Player ref={playerRef} />
               </Paper>
             </Resizable>
           </div>
@@ -182,7 +304,6 @@ const App = (props) => {
         <div className={classes.vttTimeline}>
           <VttTimeline />
         </div>
-        {/* <footer style={footerStyle} /> */}
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Fab, makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CueEditor from "./Cue/CueEditor";
@@ -8,23 +8,17 @@ import { addCue } from "../../store/actions/cueActions";
 const useStyles = makeStyles((theme) => ({
   VTTEditorContainer: {
     flex: 1,
-    // width: 400,
     padding: 10,
-    // marginBottom: "5rem",
     overflowY: "scroll",
   },
   fab: {
     position: "absolute",
-    // left: "300px",
-    // top: "85%",
-    // top: "85%",
-    // left: "83%",
     bottom: "5%",
     right: "5%",
   },
 }));
 
-const VTTEditor = () => {
+const VTTEditor = forwardRef((props, ref) => {
   const cues = useSelector((state) => state.cues.cues);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -32,7 +26,12 @@ const VTTEditor = () => {
   return (
     <div className={classes.VTTEditorContainer}>
       {cues.map((cue, index) => (
-        <CueEditor cue={cue} cueIndex={index} key={cue.id} />
+        <CueEditor
+          cue={cue}
+          cueIndex={index}
+          key={cue.id}
+          ref={ref.current[index]}
+        />
       ))}
       <Fab
         className={classes.fab}
@@ -44,6 +43,6 @@ const VTTEditor = () => {
       </Fab>
     </div>
   );
-};
+});
 
 export default VTTEditor;
