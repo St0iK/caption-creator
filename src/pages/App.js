@@ -68,30 +68,31 @@ const App = () => {
     formData.append('folder', 'folder-name')
 
     console.log({ formData });
-    const res = await axios.post('http://localhost:5000/api/upload/video', formData, {});
+    const res = await axios.post('http://localhost:5000/api/upload/video', formData);
+    const { operationId } = res.data;
     console.log(res.data);
     // const cues = getCuesFromWords(res.data);
     // dispatch(onChangeCues(cues))
 
 
-    // const intervalId = setInterval(async () => {
-    //   const resp = await fetch(`http://localhost/operation/poll/${operationId}`);
-    //   if (resp.ok) {
-    //     const job = await resp.json();
+    const intervalId = setInterval(async () => {
+      const resp = await fetch(`http://localhost:5000/api/operation/poll/${operationId}`);
+      if (resp.ok) {
+        const job = await resp.json();
+        console.log(job);
+        if (job.done) {
+          clearInterval(intervalId);
 
-    //     if (job.done) {
-    //       clearInterval(intervalId);
+        }
+      } else {
+        clearInterval(intervalId);
 
-    //     }
-    //   } else {
-    //     clearInterval(intervalId);
+      }
+    }, 2000);
 
-    //   }
-    // }, 500);
-
-    // setTimeout(() => {
-    //   clearInterval(intervalId);
-    // }, 20000);
+    setTimeout(() => {
+      clearInterval(intervalId);
+    }, 200000);
 
   }
 

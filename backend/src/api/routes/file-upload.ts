@@ -11,15 +11,15 @@ const { Storage } = require('@google-cloud/storage');
 const speech = require('@google-cloud/speech');
 const client = new speech.SpeechClient();
 const upload = multer({ dest: 'uploads/' })
-const LRUCache = require("lru-cache")
-const cache = new LRUCache();
 import { v4 as uuidv4 } from 'uuid';
+import { cache } from '../../loaders/lru-cache';
 
 
 export default (app: Router) => {
   app.use('/upload', route);
 
-  route.post('/video', upload.any(), async (req: Request, res: Response, next: any) => {
+  route.post('/video', upload.any(), (req: Request, res: Response, next: any) => {
+    console.log('hi!');
     // req.setTimeout(500000);
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send('No files were uploaded.');
@@ -28,11 +28,11 @@ export default (app: Router) => {
     const { path } = file;
 
     try {
-
+      console.log('hi2!');
       // Generate an Operation ID
       const operationId = uuidv4();
 
-      this.cache.set(operationId, {
+      cache.set(operationId, {
         step: 1,
         totalSteps: 4,
         result: {},
@@ -47,6 +47,7 @@ export default (app: Router) => {
       return res.json({ operationId });
 
     } catch (err) {
+      console.log
       return res.status(400).send(err);
     }
 
