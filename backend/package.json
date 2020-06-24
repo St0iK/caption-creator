@@ -29,6 +29,7 @@
   "dependencies": {
     "@google-cloud/speech": "^4.0.0",
     "@google-cloud/storage": "^5.1.0",
+    "@types/lru-cache": "^5.1.0",
     "agenda": "^2.0.2",
     "agendash": "^1.0.0",
     "argon2": "^0.21.0",
@@ -47,6 +48,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "jsonwebtoken": "^8.2.0",
     "lodash": "^4.17.13",
+    "lru-cache": "^5.1.1",
     "mailgun-js": "^0.22.0",
     "method-override": "^3.0.0",
     "moment": "^2.23.0",
@@ -55,6 +57,7 @@
     "morgan": "^1.9.1",
     "reflect-metadata": "^0.1.12",
     "typedi": "^0.8.0",
+    "uuid": "^8.2.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {

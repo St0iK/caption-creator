@@ -59,7 +59,7 @@ const App = () => {
     setVideoCollection(first)
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     var formData = new FormData()
@@ -68,14 +68,32 @@ const App = () => {
     formData.append('folder', 'folder-name')
 
     console.log({ formData });
-    axios.post('http://localhost:5000/api/upload/video', formData, {
-    }).then(res => {
-      console.log(res.data)
-      const cues = getCuesFromWords(res.data);
-      dispatch(onChangeCues(cues))
-    })
-  }
+    const res = await axios.post('http://localhost:5000/api/upload/video', formData, {});
+    console.log(res.data);
+    // const cues = getCuesFromWords(res.data);
+    // dispatch(onChangeCues(cues))
 
+
+    // const intervalId = setInterval(async () => {
+    //   const resp = await fetch(`http://localhost/operation/poll/${operationId}`);
+    //   if (resp.ok) {
+    //     const job = await resp.json();
+
+    //     if (job.done) {
+    //       clearInterval(intervalId);
+
+    //     }
+    //   } else {
+    //     clearInterval(intervalId);
+
+    //   }
+    // }, 500);
+
+    // setTimeout(() => {
+    //   clearInterval(intervalId);
+    // }, 20000);
+
+  }
 
   return (
     <div className={classes.test}>
