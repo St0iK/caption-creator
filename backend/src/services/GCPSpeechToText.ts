@@ -40,11 +40,6 @@ class GCPSpeechToText {
     const [response] = await operation.promise();
     // console.log(response.results[0].alternatives[0].words);
     return response.results[0].alternatives[0].words;
-    // const transcription = response.results
-    //   // .map(result => result.alternatives[0].words)
-    //   .map(result => console.log(result.alternatives[0]))
-    //   .join('\n');
-    // console.log(`Transcription: ${transcription}`);
   }
 }
 

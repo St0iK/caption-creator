@@ -3,7 +3,7 @@ import { Router, Request, Response } from 'express';
 const route = Router();
 import multer from 'multer';
 import config from '../../config';
-import convertVideo from './ffmpegHelper';
+import convertVideo from '../../services/ffmpegHelper';
 import { GCPUploader } from '../../services/GCPUploader';
 import { GCPSpeechToText } from '../../services/GCPSpeechToText';
 const { Storage } = require('@google-cloud/storage');

@@ -1,13 +1,11 @@
-import Logger from '../../loaders/logger';
+import Logger from '../loaders/logger';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
 
-Logger.info('FFMPEG is about to run !');
-
-const convertVideo = (path): Promise<string> => {
-
+const convertVideo = (path: string): Promise<string> => {
   const [, audioFileName] = path.split('/');
-  const flacAudioFileName = `${audioFileName}.flac`;
+  const flacAudioFileName: string = `${audioFileName}.flac`;
+
   return new Promise((resolve, reject) => {
     ffmpeg(path)
       .setFfmpegPath(ffmpegStatic)
