@@ -1,19 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import VttTimeline from "./VttTimeline";
-import ReactPlayerLoader from "@brightcove/react-player-loader";
-import CueTrack from "./CueTrack";
+import Video from "./Video";
 
 const Player = ({ classes }) => {
   return (
     <div className={classes.root}>
       <div className={classes.videoContainer}>
         <div className={classes.video}>
-          <ReactPlayerLoader
-            accountId={"1752604059001"}
-            videoId={"5819230967001"}
-            className={classes.video}
-          />
+          <Video />
         </div>
       </div>
       <div className={classes.vttTimeline}>
