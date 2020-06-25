@@ -60,6 +60,8 @@ export default function Video({ className }) {
 					clearInterval(intervalId);
 					const cues = getCuesFromWords(job.result.words);
 					dispatch(onChangeCues(cues))
+					setUploadState(UPLOAD_STATE_COMPLETED);
+					setConverting(false)
 				}
 			} else {
 				clearInterval(intervalId);
