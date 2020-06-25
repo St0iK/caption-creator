@@ -50,46 +50,6 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const [videoCollection, setVideoCollection] = useState('')
-
-  const onFileChange = (files) => {
-    let [first] = files
-    setVideoCollection(first)
-  }
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    var formData = new FormData()
-
-    formData.append('videoCollection', videoCollection.file)
-    formData.append('folder', 'folder-name')
-
-    const res = await axios.post('http://localhost:5000/api/upload/video', formData);
-    const { operationId } = res.data;
-
-    const intervalId = setInterval(async () => {
-      const resp = await fetch(`http://localhost:5000/api/operation/poll/${operationId}`);
-      if (resp.ok) {
-        const job = await resp.json();
-        console.log({ job });
-        if (job.done) {
-          clearInterval(intervalId);
-          const cues = getCuesFromWords(job.result.words);
-          dispatch(onChangeCues(cues))
-        }
-      } else {
-        clearInterval(intervalId);
-      }
-    }, 2000);
-
-    setTimeout(() => {
-      clearInterval(intervalId);
-    }, 200000);
-
-  }
-
   return (
     <div className={classes.test}>
       <Header />
@@ -102,24 +62,6 @@ const App = () => {
         </div>
       </div>
       <Footer />
-
-
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <button className="btn btn-primary" type="submit">Upload</button>
-        </div>
-        <div className="filepond-wrapper">
-          <FilePond
-            files={videoCollection}
-            allowMultiple={false}
-            server={null}
-            instantUpload={false}
-            onupdatefiles={(fileItems) => onFileChange(fileItems)}>
-          </FilePond>
-        </div>
-      </form>
-
-
     </div>
   );
 };
