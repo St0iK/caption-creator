@@ -24,9 +24,8 @@ UploadProgress.propTypes = {
 	totalBytes: PropTypes.number,
 };
 
-export default function UploadProgress({ uploadState, progressBytes, totalBytes }) {
-	const progressPercent = 100 * (progressBytes / totalBytes);
-
+export default function UploadProgress({ uploadState }) {
+	console.log({ uploadState });
 	return (
 		<Grid container spacing={1}>
 			<Grid item xs zeroMinWidth>
@@ -38,7 +37,7 @@ export default function UploadProgress({ uploadState, progressBytes, totalBytes 
 				</Typography>
 			</Grid>
 			<Grid item xs={12}>
-				<ProgressBar uploadState={uploadState} progressPercent={progressPercent} />
+				<ProgressBar uploadState={uploadState} progressPercent={'100'} />
 			</Grid>
 		</Grid>
 	);

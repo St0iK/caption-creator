@@ -28,54 +28,15 @@ const Title = styled(DialogTitle)({
 	alignItems: 'center',
 });
 
-// CueExtractionDialog.propTypes = {
-// 	open: PropTypes.bool,
-// 	videoFile: PropTypes.oneOfType([PropTypes.instanceOf(File), PropTypes.instanceOf(Blob)]),
-// 	onRequestClose: PropTypes.func.isRequired,
-// 	onExtractComplete: PropTypes.func.isRequired,
-// };
-
-export default function CueExtractionDialog({ open = true, videoFile, onRequestClose, onExtractComplete }) {
-	const [converting, setConverting] = React.useState(false);
-	const [uploadState, setUploadState] = React.useState();
-
-	const extractCuesFromVideo = async e => {
-		// setConverting(true);
-		// let filename;
-
-		// try {
-		// 	setUploadState(UPLOAD_STATE_EXTRACTING);
-
-		// 	setUploadState(UPLOAD_STATE_UPLOADING);
-
-
-		// 	setUploadState(UPLOAD_STATE_PROCESSING);
-
-		// 	setUploadState(UPLOAD_STATE_COMPLETED);
-
-		// 	if (results.length) {
-		// 		onExtractComplete(results);
-		// 		toast.success('Upload successful!');
-		// 		onRequestClose(e);
-		// 	} else {
-		// 		toast.error('Unable to extract any audio!');
-		// 	}
-		// } catch (err) {
-		// 	setUploadState(UPLOAD_STATE_FAILED);
-		// }
-
-		// setExtracting(false);
-
-
-	};
-
+export default function CueExtractionDialog({ uploadState }) {
+	console.log({ uploadState });
 	return (
 		<Dialog
 			disableBackdropClick
 			disableEscapeKeyDown
 			maxWidth="sm"
 			fullWidth
-			open={open}
+			open={true}
 			aria-labelledby="extract-dialog-title">
 			<Title id="extract-dialog-title" disableTypography>
 				<Typography variant="h6">Extract cues from video</Typography>
@@ -84,24 +45,16 @@ export default function CueExtractionDialog({ open = true, videoFile, onRequestC
 				</IconButton>
 			</Title>
 			<DialogContent>
-				{converting && (
-					'yo'
-					// <UploadProgress progressBytes={progressBytes} totalBytes={totalBytes} uploadState={uploadState} />
-				)}
-				{!converting && (
-					'hi'
-				)}
+				<UploadProgress uploadState={uploadState} />
 			</DialogContent>
 			<DialogActions>
-				<Button name="Extract Cues Cancel" onClick={onRequestClose} color="primary" disabled={converting}>
+				<Button name="Extract Cues Cancel" color="primary">
 					Cancel
 				</Button>
 				<Button
 					name="Extract Cues Confirm"
-					onClick={extractCuesFromVideo}
 					color="primary"
-					variant="contained"
-					disabled={converting}>
+					variant="contained">
 					Get Video Captions
 				</Button>
 			</DialogActions>

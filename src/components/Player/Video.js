@@ -34,19 +34,19 @@ export default function Video({ className }) {
 	const dispatch = useDispatch();
 	const [file, setFile] = React.useState();
 	const [converting, setConverting] = React.useState(false);
+	const [uploadState, setUploadState] = React.useState('');
 	const classes = useStyles();
 
 	const onFilesSelected = e => {
 		const [file] = e.target.files;
 		setFile(file);
-		console.log(file);
 	};
 
 	const onGenerateCaptions = async (e) => {
 		setConverting(true);
 		const formData = new FormData()
 		formData.append('file', file)
-
+		setUploadState(UPLOAD_STATE_EXTRACTING);
 		const res = await axios.post('http://localhost:5000/api/upload/video', formData);
 		const { operationId } = res.data;
 
@@ -55,6 +55,7 @@ export default function Video({ className }) {
 			if (resp.ok) {
 				const job = await resp.json();
 				console.log({ job });
+				setUploadState(UPLOAD_STATE_EXTRACTING);
 				if (job.done) {
 					clearInterval(intervalId);
 					const cues = getCuesFromWords(job.result.words);
@@ -100,7 +101,7 @@ export default function Video({ className }) {
 				Generate Captions
 			</Button>
 
-			{converting && <CueExtractionDialog />}
+			{converting && <CueExtractionDialog uploadState={uploadState} />}
 
 		</div>
 	);
