@@ -28,7 +28,6 @@ export default (app: Router) => {
     const { path } = file;
 
     try {
-      console.log('hi2!');
       // Generate an Operation ID
       const operationId = uuidv4();
 
@@ -36,8 +35,8 @@ export default (app: Router) => {
         step: 1,
         totalSteps: 4,
         result: {},
-        message: 'Operation Initialized',
-        status: 'not-done'
+        message: 'Operation Initialized. Starting conversion to audio.',
+        done: false
       });
 
       // Initialize the Converter
@@ -47,7 +46,6 @@ export default (app: Router) => {
       return res.json({ operationId });
 
     } catch (err) {
-      console.log
       return res.status(400).send(err);
     }
 

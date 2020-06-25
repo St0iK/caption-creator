@@ -21,40 +21,52 @@ class Converter {
 
   async run(path: string, operationId: string): Promise<void> {
 
-    Logger.info("STEP 1: Convert Video to Audio");
-    const audioFilePath: string = await convertVideo(path);
-    this.cache.set(operationId, {
-      step: 2,
-      totalSteps: 4,
-      result: { audioFilePath },
-      message: 'Converted Video to Audio',
-      status: 'not-done'
-    });
+    try {
+      Logger.info("STEP 1: Convert Video to Audio");
+      const audioFilePath: string = await convertVideo(path);
+      this.cache.set(operationId, {
+        step: 2,
+        totalSteps: 4,
+        result: { audioFilePath },
+        message: 'Converted Video to Audio',
+        done: false
+      });
 
-    Logger.info("STEP 2: Upload Audio to GCP");
-    const gcpUploader: IUploader = new GCPUploader('caption-creator-video-upload', new Storage());
-    await gcpUploader.uploadFile(audioFilePath);
-    const uri = `gs://${config.googleCloudStorage.videoUpload.bucket}/${audioFilePath}`;
-    this.cache.set(operationId, {
-      step: 3,
-      totalSteps: 4,
-      result: { uri },
-      message: 'Uploaded audio file to GCP',
-      status: 'not-done'
-    });
+      Logger.info("STEP 2: Upload Audio to GCP");
+      const gcpUploader: IUploader = new GCPUploader('caption-creator-video-upload', new Storage());
+      await gcpUploader.uploadFile(audioFilePath);
+      const uri = `gs://${config.googleCloudStorage.videoUpload.bucket}/${audioFilePath}`;
+      this.cache.set(operationId, {
+        step: 3,
+        totalSteps: 4,
+        result: { uri },
+        message: 'Uploaded audio file to GCP',
+        done: false
+      });
 
-    Logger.info("STEP 3: Convert Audio to Text");
-    const gcpSpeechToText = new GCPSpeechToText(uri, client);
-    const words = await gcpSpeechToText.convertAudio()
+      Logger.info("STEP 3: Convert Audio to Text");
+      const gcpSpeechToText = new GCPSpeechToText(uri, client);
+      const words = await gcpSpeechToText.convertAudio()
 
-    Logger.info("All Done, return the words");
-    this.cache.set(operationId, {
-      step: 4,
-      totalSteps: 4,
-      result: { words },
-      message: 'Converted audio to words',
-      status: 'done'
-    });
+      Logger.info("All Done, return the words");
+      this.cache.set(operationId, {
+        step: 4,
+        totalSteps: 4,
+        result: { words },
+        message: 'Converted audio to words',
+        done: true
+      });
+    } catch (e) {
+      this.cache.set(operationId, {
+        step: 4,
+        totalSteps: 4,
+        result: { e },
+        message: 'Error',
+        done: true,
+        error: true
+      });
+    }
+
   }
 }
 

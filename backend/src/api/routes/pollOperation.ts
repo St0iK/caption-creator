@@ -11,9 +11,7 @@ export default (app: Router) => {
     try {
       const { operationId } = req.params
       const operation = cache.get(operationId);
-      console.log(operationId);
-      console.log(operation);
-      return res.json(true);
+      return res.json(operation);
     } catch (err) {
       return res.status(400).send(err);
     }

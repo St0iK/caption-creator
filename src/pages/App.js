@@ -55,38 +55,32 @@ const App = () => {
 
   const onFileChange = (files) => {
     let [first] = files
-    // @ts-ignore
     setVideoCollection(first)
   }
 
   const onSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     var formData = new FormData()
 
     formData.append('videoCollection', videoCollection.file)
     formData.append('folder', 'folder-name')
 
-    console.log({ formData });
     const res = await axios.post('http://localhost:5000/api/upload/video', formData);
     const { operationId } = res.data;
-    console.log(res.data);
-    // const cues = getCuesFromWords(res.data);
-    // dispatch(onChangeCues(cues))
-
 
     const intervalId = setInterval(async () => {
       const resp = await fetch(`http://localhost:5000/api/operation/poll/${operationId}`);
       if (resp.ok) {
         const job = await resp.json();
-        console.log(job);
+        console.log({ job });
         if (job.done) {
           clearInterval(intervalId);
-
+          const cues = getCuesFromWords(job.result.words);
+          dispatch(onChangeCues(cues))
         }
       } else {
         clearInterval(intervalId);
-
       }
     }, 2000);
 
