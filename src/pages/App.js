@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, createRef } from "react";
+import React, { useEffect, useRef, createRef, useCallback } from "react";
 // import GridLayout from "react-grid-layout";
 import useWindowSize from "../common/useWindowSize";
 import withRoot from "../withRoot";
@@ -117,82 +117,60 @@ const App = (props) => {
   const size = useWindowSize();
   const playerRef = useRef();
   const cues = useSelector((state) => state.cues.cues);
-  // console.log(cues);
   const refsArray = useRef([]);
   refsArray.current = cues.map(() => createRef());
   useEffect(() => console.log("re-render"));
-
-  // console.log(refsArray);
-  /** BRING THE SCROLL METHODS: */
-  let keepTime;
   let currentCueIndex = useRef(undefined);
+  const vttTimelineRef = useRef();
 
-  const playFunk = () => {
-    // console.log("play fired");
-    // console.log(`currentTime: ${playerRef.current.currentTime}`);
-
-    keepTime = setInterval(() => {
-      let currentTime = playerRef.current.currentTime;
-      // console.log(currentCueIndex);
-      if (!currentCueIndex.current) currentCueIndex.current = 0;
-      // console.log(cues[currentCueIndex.current]);
-      console.log(
-        `currentTime:${playerRef.current.currentTime}, currentCueIndex:${
-          currentCueIndex.current
-        }, startTime:${cues[currentCueIndex.current].startTime}`
-      );
-      if (
-        cues.length > 0 &&
-        currentTime >= cues[currentCueIndex.current].startTime &&
-        currentTime <= cues[currentCueIndex.current].endTime
-      ) {
-        // console.log("current from 172 is " + currentCueIndex.current);
-        refsArray.current[currentCueIndex.current].current.scrollIntoView({
-          block: "end",
-          behavior: "smooth",
-        });
-        if (currentCueIndex.current < cues.length - 1) {
-          currentCueIndex.current++;
-          // console.log("current from 172 is " + currentCueIndex.current);
-        }
-        // refsArray.current[currentCueIndex.current].current.scrollIntoView({
-        //   block: "end",
-        //   behavior: "smooth",
-        // });
-      }
-    }, 1000);
+  /** Cue AUTO-SCROLL: */
+  let keepTime = useRef();
+  const validateScroll = () => {
+    console.log("Validating Scroll...");
+    //run only if cue.lenght > 0 or if currentCueIndex !== cues.lenth -1
+    let currentTime = playerRef.current.currentTime;
+    // if (!currentCueIndex.current) currentCueIndex.current = 0;
+    findCurrentCueIndex();
+    if (!currentCueIndex.current) return;
+    if (
+      cues.length > 0 &&
+      currentTime >= cues[currentCueIndex.current].startTime &&
+      currentTime <= cues[currentCueIndex.current].endTime
+    ) {
+      scrollCues();
+      if (currentCueIndex.current < cues.length - 1) currentCueIndex.current++;
+    }
   };
 
-  const seekFunk = () => {
+  const onPlay = () => {
+    // https://stackoverflow.com/questions/6685396/execute-the-setinterval-function-without-delay-the-first-time
+    validateScroll();
+    keepTime.current = setInterval(validateScroll, 1000);
+  };
+
+  const findCurrentCueIndex = () => {
+    // Να βάλω το onSeek να παιρνει την scrollPositioν κατευθειαν απο το videoPlayerRef.current.currentTime;
+    // και το ίδιο και στο onPlay (*φυσικά μονο για το οριζόντιο σκρολλ)
     if (cues.length > 0) {
       let minIndex = 0;
       let maxIndex = cues.length - 1;
       let midIndex = Math.floor((maxIndex - minIndex) / 2);
-      console.log(
-        `minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
-      );
-
       let currentTime = playerRef.current.currentTime;
+      currentCueIndex.current = undefined;
+      console.log(`findCurrentCueIndex: ${currentTime}`);
       if (
         currentTime >= cues[minIndex].startTime &&
         currentTime <= cues[minIndex].endTime
       ) {
         currentCueIndex.current = minIndex;
-        refsArray.current[currentCueIndex.current].current.scrollIntoView();
-        console.log(
-          `the index is the minIndex: ${currentCueIndex.current}, SCROLL(!)`
-        );
+        scrollCues();
         return;
-      }
-      if (
+      } else if (
         currentTime >= cues[maxIndex].startTime &&
         currentTime <= cues[maxIndex].endTime
       ) {
         currentCueIndex.current = maxIndex;
-        refsArray.current[currentCueIndex.current].current.scrollIntoView();
-        console.log(
-          `the index is the maxIndex: ${currentCueIndex.current}, SCROLL(!)`
-        );
+        scrollCues();
         return;
       }
 
@@ -200,20 +178,11 @@ const App = (props) => {
         if (cues[midIndex].startTime >= currentTime) {
           maxIndex = midIndex;
           midIndex = minIndex + Math.floor((maxIndex - minIndex) / 2);
-          console.log(
-            `IF LOOP:minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
-          );
         } else {
           minIndex = midIndex;
           midIndex = minIndex + Math.floor((maxIndex - minIndex) / 2);
-          console.log(
-            `ELSE LOOP:minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
-          );
         }
       } while (maxIndex - minIndex > 3);
-      console.log(
-        `minIndex=${minIndex}, midIndex=${midIndex},maxIndex=${maxIndex}`
-      );
 
       for (let i = minIndex; i < maxIndex; i++) {
         if (
@@ -224,25 +193,44 @@ const App = (props) => {
         }
       }
       if (currentCueIndex.current) {
-        refsArray.current[currentCueIndex.current].current.scrollIntoView();
+        scrollCues();
       }
-      // console.log(currentCueIndex.current);
     }
+  };
+
+  const scrollCues = () => {
+    refsArray.current[currentCueIndex.current].current.scrollIntoView();
+    let SCROLLPOSITION = cues[currentCueIndex.current].startTime * 200;
+    vttTimelineRef.current.scrollTo({
+      top: 0,
+      left: SCROLLPOSITION,
+      behavior: "smooth",
+    });
+  };
+
+  const onSeek = () => findCurrentCueIndex();
+
+  const onPause = () => {
+    clearInterval(keepTime.current);
   };
 
   useEffect(
     (e) => {
-      playerRef.current.addEventListener("seeked", seekFunk);
-      playerRef.current.addEventListener("play", playFunk);
-      playerRef.current.addEventListener("pause", () =>
-        clearInterval(keepTime)
-      );
+      playerRef.current.addEventListener("seeked", onSeek);
+      playerRef.current.addEventListener("play", onPlay);
+      playerRef.current.addEventListener("pause", onPause);
       return () => {
-        playerRef.current.removeEventListener("seeked", seekFunk);
-        playerRef.current.removeEventListener("play", playFunk);
+        playerRef.current.removeEventListener("seeked", onSeek);
+        playerRef.current.removeEventListener("play", onPlay);
+        playerRef.current.removeEventListener("pause", onPause);
+        if (!playerRef.current.paused) {
+          onPause();
+          // clearInterval(keepTime.current);
+          onPlay();
+        }
       };
     },
-    [cues, seekFunk]
+    [cues, onSeek, onPlay, onPause]
   );
 
   return (
@@ -301,7 +289,7 @@ const App = (props) => {
             </Resizable>
           </div>
         </main>
-        <div className={classes.vttTimeline}>
+        <div className={classes.vttTimeline} ref={vttTimelineRef}>
           <VttTimeline />
         </div>
       </div>
@@ -310,3 +298,22 @@ const App = (props) => {
 };
 
 export default withRoot(App);
+
+// fix:
+// while onPlay is active a seek event is triggered -> scroll breaks (probably onplays fault)
+// the above breaks if the user seeks on odd numbers eg 00:07 -> startTime:6 endTime:8 currentTime:8.93048
+// that happens cause onPlay has a 1second timeout so when it executes the currentCueIndex is outdated
+
+// debounce on vtteditor
+// smth breaks if no cues exist
+// useCallback on PlayFunk and SeekFuck
+// variable naming handleScroll() keepTime -> timer
+// refactor the for loop in the onSeek to a breakable loop
+// with each new cue the whole thing re-renders making everything suuuuuuuuper slow
+
+// Δεν μου αρέσει που εχω τοσο logic inside App.js , should I abstract it as a hook?
+// There is a lot of Bloat in JSX some of it (Paper,Resizable) should be moved in the component
+// WHAT THE HELL ARE THE MAGIC NUMBERS IN RESIZABLE
+// Rename on Seek to something like getCurrentCueIndex ?
+// onPlay disable addCue
+// add redux devtools
