@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, forwardRef } from "react";
 import { Grid, TextField, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -11,11 +11,10 @@ import {
 import { useDispatch } from "react-redux";
 import { debounce } from "lodash";
 
-const CueEditor = ({ cue, cueIndex }) => {
+const CueEditor = forwardRef(({ cue, cueIndex }, ref) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [text, setText] = useState(cue.text);
-
   // https://medium.com/@rajeshnaroth/using-throttle-and-debounce-in-a-react-function-component-5489fc3461b3
   // https://codesandbox.io/s/functional-component-debounce-l543l?file=/src/index.js
   const updateCueText = (text) => dispatch(onChangeCueText(cueIndex, text));
@@ -64,7 +63,7 @@ const CueEditor = ({ cue, cueIndex }) => {
   };
 
   return (
-    <Grid container spacing={2} className={classes.root}>
+    <Grid container spacing={2} className={classes.root} ref={ref}>
       <Grid
         container
         item
@@ -123,7 +122,7 @@ const CueEditor = ({ cue, cueIndex }) => {
       </Grid>
     </Grid>
   );
-};
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
