@@ -1,24 +1,9 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import VttTimeline from "./VttTimeline";
-import Video from "./Video";
+import ReactPlayer from "react-player";
 
-const Player = ({ classes }) => {
-  return (
-    <div className={classes.root}>
-      <div className={classes.videoContainer}>
-        <div className={classes.video}>
-          <Video />
-        </div>
-      </div>
-      <div className={classes.vttTimeline}>
-        <VttTimeline />
-      </div>
-    </div>
-  );
-};
-
-const styles = (theme) => ({
+const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -43,5 +28,25 @@ const styles = (theme) => ({
     overflowX: "scroll",
   },
 });
+const Player = (props) => {
+  const classes = useStyles();
 
-export default withStyles(styles)(Player);
+  return (
+    <div className={classes.root}>
+      <div className={classes.videoContainer}>
+        <div className={classes.video}>
+          <ReactPlayer
+            url="https://www.dropbox.com/s/8zw5wq5ysa7o3di/goodCatBadCat.mp4?dl=0"
+            playing={false}
+            controls={true}
+          />
+        </div>
+      </div>
+      <div className={classes.vttTimeline}>
+        <VttTimeline />
+      </div>
+    </div>
+  );
+};
+
+export default Player;
