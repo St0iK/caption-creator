@@ -5,8 +5,6 @@ import App from "./pages/App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import "./../node_modules/react-grid-layout/css/styles.css";
-import "./../node_modules/react-resizable/css/styles.css";
 
 const Root = () => {
   return (

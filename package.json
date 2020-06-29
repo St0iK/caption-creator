@@ -15,7 +15,6 @@
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1",
     "react-google-login": "^5.0.0",
-    "react-grid-layout": "^0.18.3",
     "react-player": "^2.1.0",
     "react-redux": "^7.2.0",
     "react-resize-detector": "^4.2.3",
