@@ -1,7 +1,5 @@
-import React, { useEffect, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import ReactResizeDetector from "react-resize-detector";
-import { useSelector } from "react-redux";
-import videoTrack from "./videoplayback.mp4";
 import { Paper } from "@material-ui/core";
 import { Resizable } from "re-resizable";
 import useWindowSize from "../../common/useWindowSize";
@@ -22,7 +20,6 @@ const style2 = {
 
 const VideoPlayerWrapper = forwardRef((props, ref) => {
   const size = useWindowSize();
-  const [captionSrc, setCaptionSrc] = React.useState(null);
 
   return (
     <Resizable
@@ -49,7 +46,6 @@ const VideoPlayerWrapper = forwardRef((props, ref) => {
           {({ width, height }) => (
             <div>
               <VideoPlayer
-                videoTrack={videoTrack}
                 width={width || 200}
                 height={height || 200}
               />

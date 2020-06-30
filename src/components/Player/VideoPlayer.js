@@ -3,17 +3,11 @@ import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
-import { getCuesFromWords } from '../../services/VttGenerator';
+import { getCuesFromWords } from '../../services/vtt-generator';
 import { useDispatch } from "react-redux";
 import { onChangeCues } from "../../store/actions/cueActions";
-import UploadProgress, {
-	UPLOAD_STATE_COMPLETED,
-	UPLOAD_STATE_EXTRACTING,
-	UPLOAD_STATE_PROCESSING,
-	UPLOAD_STATE_UPLOADING,
-	UPLOAD_STATE_FAILED,
-} from './upload-progress.component';
-import CueExtractionDialog from './converter-dialog';
+import { UPLOAD_STATE_COMPLETED, UPLOAD_STATE_EXTRACTING } from './UploadProgress';
+import CueExtractionDialog from './ConverterDialog';
 
 const useStyles = makeStyles({
 	loaderRoot: {
@@ -30,10 +24,10 @@ VideoPlayer.propTypes = {
 	className: PropTypes.any,
 };
 
-export default function VideoPlayer({ className, videoTrack, width, height }) {
+export default function VideoPlayer({ className, width, height }) {
 	const dispatch = useDispatch();
 	const [file, setFile] = React.useState();
-	const [src, setSrc] = React.useState();
+	const [src, setSrc] = React.useState('');
 	const [converting, setConverting] = React.useState(false);
 	const [uploadState, setUploadState] = React.useState('');
 	const classes = useStyles();
@@ -53,6 +47,7 @@ export default function VideoPlayer({ className, videoTrack, width, height }) {
 		const formData = new FormData()
 		formData.append('file', file)
 		setUploadState(UPLOAD_STATE_EXTRACTING);
+
 		const res = await axios.post('http://localhost:5000/api/upload/video', formData);
 		const { operationId } = res.data;
 
@@ -82,9 +77,7 @@ export default function VideoPlayer({ className, videoTrack, width, height }) {
 
 	if (!file) {
 		return (
-
 			<div className={classes.loaderRoot}>
-
 				<input
 					className={''}
 					style={{ display: 'none' }}
@@ -112,7 +105,8 @@ export default function VideoPlayer({ className, videoTrack, width, height }) {
 
 			>
 			</video>
-			<Button color="secondary" component="span" className={''} onClick={onGenerateCaptions}>
+
+			<Button component="span" className={''} onClick={onGenerateCaptions}>
 				Generate Captions
 			</Button>
 

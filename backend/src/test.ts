@@ -1,6 +1,6 @@
 import Logger from './loaders/logger';
 import { GCPSpeechToText } from './services/GCPSpeechToText';
-import { getCuesFromWords } from '../../src/services/VttGenerator';
+import { getCuesFromWords } from '../../src/services/vtt-generator';
 const speech = require('@google-cloud/speech');
 const client = new speech.SpeechClient();
 

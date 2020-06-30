@@ -39,7 +39,6 @@ const cueReducer = (state = initialCues, action) => {
       };
 
     case REMOVE_CUE:
-      // newCues.splice(action.index, 1);
       updatedCues = newCues.filter((c, i) => i !== action.index);
       return {
         ...state,
@@ -57,11 +56,11 @@ const cueReducer = (state = initialCues, action) => {
       };
 
     case ON_CHANGE_CUES:
-      const { cues: updatedCues } = action.payload;
-      console.log({ updatedCues });
+      const { cues: changedCues } = action.payload;
+      console.log({ changedCues });
       return {
         ...state,
-        cues: sortBy(updatedCues, ["startTime"]),
+        cues: sortBy(changedCues, ["startTime"]),
       };
 
     case ON_DELTA_CUE:
