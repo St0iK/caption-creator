@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
-import { getCuesFromWords } from './../../services/VttGenerator';
+import { getCuesFromWords } from '../../services/VttGenerator';
 import { useDispatch } from "react-redux";
 import { onChangeCues } from "../../store/actions/cueActions";
 import UploadProgress, {
@@ -26,11 +26,11 @@ const useStyles = makeStyles({
 	},
 });
 
-Video.propTypes = {
+VideoPlayer.propTypes = {
 	className: PropTypes.any,
 };
 
-export default function Video({ className }) {
+export default function VideoPlayer({ className, videoTrack, width, height }) {
 	const dispatch = useDispatch();
 	const [file, setFile] = React.useState();
 	const [converting, setConverting] = React.useState(false);
@@ -98,7 +98,14 @@ export default function Video({ className }) {
 
 	return (
 		<div>
-			<div>Video Player will be here</div>
+			<video
+				controls
+				src={videoTrack}
+				width={width || 200}
+				height={height || 200}
+
+			>
+			</video>
 			<Button color="secondary" component="span" className={''} onClick={onGenerateCaptions}>
 				Generate Captions
 			</Button>

@@ -105,23 +105,23 @@ const useAutoScroll = () => {
     clearInterval(timerID.current);
   };
 
-  useEffect(
-    (e) => {
-      playerRef.current.addEventListener("seeked", onSeek);
-      playerRef.current.addEventListener("play", onPlay);
-      playerRef.current.addEventListener("pause", onPause);
-      return () => {
-        playerRef.current.removeEventListener("seeked", onSeek);
-        playerRef.current.removeEventListener("play", onPlay);
-        playerRef.current.removeEventListener("pause", onPause);
-        if (!playerRef.current.paused) {
-          onPause();
-          onPlay();
-        }
-      };
-    },
-    [cues, onSeek, onPlay, onPause]
-  );
+  // useEffect(
+  //   (e) => {
+  //     playerRef.current.addEventListener("seeked", onSeek);
+  //     playerRef.current.addEventListener("play", onPlay);
+  //     playerRef.current.addEventListener("pause", onPause);
+  //     return () => {
+  //       playerRef.current.removeEventListener("seeked", onSeek);
+  //       playerRef.current.removeEventListener("play", onPlay);
+  //       playerRef.current.removeEventListener("pause", onPause);
+  //       if (!playerRef.current.paused) {
+  //         onPause();
+  //         onPlay();
+  //       }
+  //     };
+  //   },
+  //   [cues, onSeek, onPlay, onPause]
+  // );
 
   return [cueRefArray, playerRef, vttTimelineRef];
 };
