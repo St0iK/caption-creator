@@ -33,6 +33,7 @@ VideoPlayer.propTypes = {
 export default function VideoPlayer({ className, videoTrack, width, height }) {
 	const dispatch = useDispatch();
 	const [file, setFile] = React.useState();
+	const [src, setSrc] = React.useState();
 	const [converting, setConverting] = React.useState(false);
 	const [uploadState, setUploadState] = React.useState('');
 	const classes = useStyles();
@@ -40,6 +41,11 @@ export default function VideoPlayer({ className, videoTrack, width, height }) {
 	const onFilesSelected = e => {
 		const [file] = e.target.files;
 		setFile(file);
+		if (src) {
+			URL.revokeObjectURL(src);
+		}
+		const localUrl = URL.createObjectURL(file);
+		setSrc(localUrl);
 	};
 
 	const onGenerateCaptions = async (e) => {
@@ -100,7 +106,7 @@ export default function VideoPlayer({ className, videoTrack, width, height }) {
 		<div>
 			<video
 				controls
-				src={videoTrack}
+				src={src}
 				width={width || 200}
 				height={height || 200}
 
