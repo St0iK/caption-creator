@@ -28,4 +28,6 @@ Automatically extract caption/subtitles for the video using **Cloud Speech-to-Te
 - [x] **[Material UI](https://material-ui.com/)**
 
 ### Server Side
-- [x] **[WIP](https://github.com/facebook/react)**
+- [x] **[Node.js](https://nodejs.org/en/)**
+- [x] **[Express](https://expressjs.com/)**
+- [x] **[Typescript](https://www.typescriptlang.org/)**
