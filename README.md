@@ -1,8 +1,10 @@
 # Caption Creator
 
-A tool for creating and editing **Web Video Text Track (WebVTT)** files in your browser.
+Create and Edit **Web Video Text Track (WebVTT)** file for a video. It allows you to manually add them or generate them automatically using [Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text)
 
 ![Image of Yaktocat](https://i.imgur.com/SlHmAgr.png)
+
+> Warning: This project in active development.
 
 **Backend**
 
