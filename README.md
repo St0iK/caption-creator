@@ -14,10 +14,10 @@ It allows you to manually add them or generate them automatically using [Cloud S
 
 Automatically extract caption/subtitles for the video using **Cloud Speech-to-Text API.**
 
-- [ ] Upload video to GCP storage
-- [ ] Using Cloud Functions & ffmpeg convert Audio from Video
-- [ ] Store Audio file on GCP storage
-- [ ] Send Audio file to GCP Speech to Text API
+- [x] Upload video to GCP storage
+- [x] Using Cloud Functions & ffmpeg convert Audio from Video
+- [x] Store Audio file on GCP storage
+- [x] Send Audio file to GCP Speech to Text API
 
 
 
