@@ -4,12 +4,12 @@ import { makeStyles } from "@material-ui/styles";
 import CueHandle from "./CueHandle";
 import { useSelector } from "react-redux";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   cueTrackRoot: {
     position: "relative",
     width: "100%",
     height: "100%",
-    backgroundColor: "#616161",
+    backgroundColor: theme.palette.secondary.main,
   },
   cueContainer: {
     position: "relative",
@@ -22,20 +22,10 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
-    padding: 30,
+    // padding: 30,
     userSelect: "none",
   },
-  content: {
-    height: "100%",
-  },
-  scrollContainer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-});
+}));
 
 CueTrack.propTypes = {};
 

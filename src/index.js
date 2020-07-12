@@ -5,13 +5,24 @@ import App from "./pages/App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import ThemeProvider from "./themes/ThemeProvider";
+import { CssBaseline } from "@material-ui/core";
 
 const Root = () => {
   return (
     <Router>
       <Provider store={store}>
         <Switch>
-          <Route exact path="/" component={App} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <ThemeProvider>
+                <CssBaseline />
+                <App />
+              </ThemeProvider>
+            )}
+          />
         </Switch>
       </Provider>
     </Router>

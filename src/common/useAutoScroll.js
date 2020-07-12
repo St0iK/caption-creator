@@ -105,23 +105,38 @@ const useAutoScroll = () => {
     clearInterval(timerID.current);
   };
 
-  // useEffect(
-  //   (e) => {
-  //     playerRef.current.addEventListener("seeked", onSeek);
-  //     playerRef.current.addEventListener("play", onPlay);
-  //     playerRef.current.addEventListener("pause", onPause);
-  //     return () => {
-  //       playerRef.current.removeEventListener("seeked", onSeek);
-  //       playerRef.current.removeEventListener("play", onPlay);
-  //       playerRef.current.removeEventListener("pause", onPause);
-  //       if (!playerRef.current.paused) {
-  //         onPause();
-  //         onPlay();
-  //       }
-  //     };
-  //   },
-  //   [cues, onSeek, onPlay, onPause]
-  // );
+  useEffect(
+    //with the current logic if the user ads cues in cue editor and THEN clicks the Select Video Button
+    // the player's 'playe/seeked' events wont fire
+    //it will start working as intended if another cue is added
+    //maybe force the reducer to update cues when the player is loaded?
+    //or simply make a reducer that will fire when the player is loaded eg:
+    //initial value playerLoaded=false
+    // when playerLoaded= true refresh the event listeners at useAutoScroll
+    //playerloaded will be a dependancy of useAutoScroll
+
+    (e) => {
+      if (playerRef.current) {
+        playerRef.current.addEventListener("seeked", onSeek);
+        playerRef.current.addEventListener("play", onPlay);
+        playerRef.current.addEventListener("pause", onPause);
+      } else {
+        console.log("PLAYER NOT READY");
+      }
+      return () => {
+        if (playerRef.current) {
+          playerRef.current.removeEventListener("seeked", onSeek);
+          playerRef.current.removeEventListener("play", onPlay);
+          playerRef.current.removeEventListener("pause", onPause);
+          if (!playerRef.current.paused) {
+            onPause();
+            onPlay();
+          }
+        }
+      };
+    },
+    [cues, onSeek, onPlay, onPause]
+  );
 
   return [cueRefArray, playerRef, vttTimelineRef];
 };

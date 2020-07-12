@@ -1,5 +1,4 @@
 import React from "react";
-import withRoot from "../withRoot";
 import Header from "../components/Header";
 import { makeStyles } from "@material-ui/core/";
 import VTTEditor from "../components/Editor/VTTEditor";
@@ -14,9 +13,9 @@ const useStyles = makeStyles({
     flexDirection: "column",
   },
   vttTimeline: {
-    flex: 1,
     maxHeight: 300,
     minHeight: 150,
+    height: 200,
     overflowX: "scroll",
     marginTop: "auto",
   },
@@ -32,6 +31,8 @@ const useStyles = makeStyles({
     width: "100%",
     display: "flex",
     overflow: "hidden",
+    maxHeight: "calc(100vh - 197px)",
+    minHeight: "calc(100vh - 264px)",
   },
 });
 
@@ -59,4 +60,4 @@ const App = (props) => {
   );
 };
 
-export default withRoot(App);
+export default App;

@@ -20,23 +20,6 @@ const useStyles = makeStyles({
     flex: 1,
     minHeight: 0,
   },
-  audioTrack: {
-    zIndex: 1,
-    height: "100%",
-  },
-  cueTrack: {
-    zIndex: 2,
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  timeTicks: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-  },
 });
 
 VttTimeline.propTypes = {};

@@ -1,47 +1,53 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import React, { useContext } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  makeStyles,
+  IconButton,
+  useTheme,
+} from "@material-ui/core/";
+import { ThemeContext } from "../themes/ThemeProvider";
+import { Brightness5, Brightness4 } from "@material-ui/icons";
 
-const Header = ({ classes }) => {
+const Header = () => {
+  const setTheme = useContext(ThemeContext);
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const handleThemeToggle = () => {
+    theme.palette.type === "light"
+      ? setTheme("darkTheme")
+      : setTheme("lightTheme");
+  };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.root}>
-        <Toolbar>
+    <div>
+      <AppBar position="static" color="primary">
+        <Toolbar className={classes.toolBar}>
           <Typography variant="h6" className={classes.cc}>
             Caption Creator
           </Typography>
+          <section>
+            <IconButton onClick={handleThemeToggle}>
+              {theme.palette.type === "light" ? (
+                <Brightness4 />
+              ) : (
+                <Brightness5 />
+              )}
+            </IconButton>
+          </section>
         </Toolbar>
       </AppBar>
     </div>
   );
 };
 
-const styles = (theme) => ({
-  root: {
-    backgroundColor: '#f582ae',
-    color: '#172c66'
-  },
-  grow: {
-    flexGrow: 1,
+const useStyles = makeStyles((theme) => ({
+  toolBar: {
     display: "flex",
-    alignItems: "center",
+    justifyContent: "space-between",
   },
-  icon: {
-    // marginRight: theme.spacing.unit,
-    color: "green",
-    fontSize: 45,
-  },
-  mobile: {
-    display: "none",
-  },
-  picture: {
-    height: "50px",
-    borderRadius: "90%",
-    // marginRight: theme.spacing.unit * 2,
-  },
-});
+}));
 
-export default withStyles(styles)(Header);
+export default Header;

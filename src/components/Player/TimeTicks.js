@@ -1,8 +1,8 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/styles";
 import { formatSeconds } from "../../services/timing";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTheme, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -14,28 +14,6 @@ const useStyles = makeStyles({
     zIndex: 3,
     height: 20,
     boxShadow: "0 1px 5px rgba(0, 0, 0, 0.3)",
-  },
-  trackRoot: {
-    position: "relative",
-    flex: 1,
-    minHeight: 0,
-  },
-  audioTrack: {
-    zIndex: 1,
-    height: "100%",
-  },
-  cueTrack: {
-    zIndex: 2,
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  timeTicks: {
-    position: "absolute",
-    top: 0,
-    left: 0,
   },
 });
 
@@ -71,6 +49,7 @@ export default function TimeTicks() {
     // one tick per second, and add one so it overlaps with the starting tick of the next svg
     const numTicks = Math.ceil(width / pixelsPerTick) + 1;
     const ticks = [];
+    const theme = useTheme();
 
     for (let i = 0; i < numTicks; i++) {
       const x = i * pixelsPerTick;
@@ -86,7 +65,7 @@ export default function TimeTicks() {
         height={height}
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect width="100%" height="100%" fill="#3f51b5" />
+        <rect width="100%" height="100%" fill={theme.palette.primary.main} />
         {ticks}
       </svg>
     );

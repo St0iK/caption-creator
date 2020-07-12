@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import * as PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     width: "100%",
     height: "100%",
-    backgroundColor: "#616161",
+    backgroundColor: theme.palette.secondary.main,
   },
   scrollContainer: {
     position: "absolute",

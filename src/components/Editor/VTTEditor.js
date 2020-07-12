@@ -36,7 +36,7 @@ const VTTEditor = forwardRef((props, ref) => {
       square
       className={classes.cueEditorContainer}
       style={{
-        maxHeight: size.height - 80 - 150,
+        maxHeight: size.height - 64 - 200,
         position: "relative",
         minWidth: "35vw",
       }}
@@ -52,7 +52,7 @@ const VTTEditor = forwardRef((props, ref) => {
         ))}
         <Fab
           className={classes.fab}
-          color="primary"
+          color="secondary"
           aria-label="Add Cue"
           onClick={() => dispatch(addCue())}
         >
