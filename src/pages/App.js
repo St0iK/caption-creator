@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import { makeStyles } from "@material-ui/core/";
 import VTTEditor from "../components/Editor/VTTEditor";
 import VttTimeline from "../components/Player/VttTimeline";

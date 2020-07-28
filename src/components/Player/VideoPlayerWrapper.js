@@ -7,7 +7,7 @@ import VideoPlayer from "./VideoPlayer";
 
 const HEADER_AND_TIMELINE_HEIGHT = 64 + 200;
 
-const videoWrapper = {
+const videoWrapperStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -19,6 +19,11 @@ const videoWrapper = {
 
 const VideoPlayerWrapper = forwardRef((props, ref) => {
   const size = useWindowSize();
+  // let defaultHeight = size.height - HEADER_AND_TIMELINE_HEIGHT;
+
+  // React.useEffect(() => {
+  //   defaultHeight = size.height - HEADER_AND_TIMELINE_HEIGHT;
+  // }, [size]);
 
   return (
     <Resizable
@@ -36,10 +41,13 @@ const VideoPlayerWrapper = forwardRef((props, ref) => {
       minWidth={400}
       defaultSize={{
         width: "60vw",
+        // height: "75vh",
+        // height: size.height - 200 - 64,
+        // height: defaultHeight
       }}
       maxHeight={size.height - HEADER_AND_TIMELINE_HEIGHT}
     >
-      <Paper style={videoWrapper}>
+      <Paper style={videoWrapperStyle}>
         <ReactResizeDetector handleWidth handleHeight>
           {({ width, height }) => (
             <div>

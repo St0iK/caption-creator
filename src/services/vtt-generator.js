@@ -1,4 +1,3 @@
-
 export function getCuesFromWords(wordsList) {
   console.log({ wordsList });
   let cursor = 0;
@@ -44,13 +43,14 @@ function joinWords(wordsList, from, to) {
   for (let i = 0; i < numWordsToJoin; i++) {
     wordsToJoin[i] = wordsList[from + i].word;
   }
-  return wordsToJoin.join(' ');
+  return wordsToJoin.join(" ");
 }
-
+/* so far parseTimeUnit is not used
 function parseTimeUnit(unit) {
   const parsed = parseInt(unit);
   return isNaN(parsed) ? 0 : parsed;
 }
+*/
 
 // type speechV2TimeRepresentation = {
 //   seconds: string;
@@ -58,8 +58,10 @@ function parseTimeUnit(unit) {
 // }
 // timeString is a string in the format "10.500s"
 function parseGoogleTime(timeString) {
-  console.log({ timeString })
-  const timeConverted = `${timeString.seconds}.${String(timeString.nanos).substr(0, 3)}`
-  console.log({ timeConverted })
+  console.log({ timeString });
+  const timeConverted = `${timeString.seconds}.${String(
+    timeString.nanos
+  ).substr(0, 3)}`;
+  console.log({ timeConverted });
   return parseFloat(timeConverted.slice(0, -1));
 }

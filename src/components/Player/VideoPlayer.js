@@ -1,16 +1,10 @@
 import React, { forwardRef, useState, useEffect } from "react";
+// import * as PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@material-ui/core";
-import axios from "axios";
-import { getCuesFromWords } from "../../services/vtt-generator";
-import { formatSeconds } from "../../services/timing";
 import { useDispatch, useSelector } from "react-redux";
-import { onChangeCues } from "../../store/actions/cueActions";
-import {
-  UPLOAD_STATE_COMPLETED,
-  UPLOAD_STATE_EXTRACTING,
-} from "./UploadProgress";
-import CueExtractionDialog from "./ConverterDialog";
+import { onSetVideoSrc } from "../../store/actions/videoSrcActions";
+import { formatSeconds } from "../../services/timing";
 
 const useStyles = makeStyles((theme) => ({
   loaderRoot: {
@@ -22,15 +16,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// VideoPlayer.propTypes = {
+// 	className: PropTypes.any,
+// };
+
 const VideoPlayer = forwardRef((props, ref) => {
-  const cues = useSelector((state) => state.cues.cues);
+  const { width, height } = props;
   const dispatch = useDispatch();
   const [captionSrc, setCaptionSrc] = useState(null);
-  const { width, height } = props;
-  const [file, setFile] = useState();
-  const [src, setSrc] = useState("");
-  const [converting, setConverting] = useState(false);
-  const [uploadState, setUploadState] = useState("");
+  const cues = useSelector((state) => state.cues.cues);
+
+  const src = useSelector((state) => state.video.src);
   const classes = useStyles();
 
   useEffect(() => {
@@ -56,60 +52,18 @@ const VideoPlayer = forwardRef((props, ref) => {
   }
 
   const onFilesSelected = (e) => {
-    const [file] = e.target.files;
-    setFile(file);
-    if (src) {
-      URL.revokeObjectURL(src);
-    }
-    const localUrl = URL.createObjectURL(file);
-    setSrc(localUrl);
+    const [videoFile] = e.target.files;
+    dispatch(onSetVideoSrc(videoFile));
   };
 
-  const onGenerateCaptions = async (e) => {
-    setConverting(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    setUploadState(UPLOAD_STATE_EXTRACTING);
-
-    const res = await axios.post(
-      "http://localhost:5000/api/upload/video",
-      formData
-    );
-    const { operationId } = res.data;
-
-    const intervalId = setInterval(async () => {
-      const resp = await fetch(
-        `http://localhost:5000/api/operation/poll/${operationId}`
-      );
-      if (resp.ok) {
-        const job = await resp.json();
-        console.log({ job });
-        setUploadState(UPLOAD_STATE_EXTRACTING);
-        if (job.done) {
-          clearInterval(intervalId);
-          const cuesFromWords = getCuesFromWords(job.result.words);
-          dispatch(onChangeCues(cuesFromWords));
-          setUploadState(UPLOAD_STATE_COMPLETED);
-          setConverting(false);
-        }
-      } else {
-        clearInterval(intervalId);
-      }
-    }, 2000);
-
-    setTimeout(() => {
-      clearInterval(intervalId);
-    }, 200000);
-  };
-
-  if (!file) {
+  if (!src) {
     return (
       <div className={classes.loaderRoot}>
         <input
           className={""}
           style={{ display: "none" }}
           id="raised-button-file"
-          multiple
+          accept="video/*"
           type="file"
           onChange={onFilesSelected}
         />
@@ -138,12 +92,6 @@ const VideoPlayer = forwardRef((props, ref) => {
       >
         <track default src={captionSrc} />
       </video>
-
-      <Button component="span" className={""} onClick={onGenerateCaptions}>
-        Generate Captions
-      </Button>
-
-      {converting && <CueExtractionDialog uploadState={uploadState} />}
     </div>
   );
 });

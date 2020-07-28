@@ -23,10 +23,10 @@ export function parseVTTTime(formattedTime) {
   const [
     min10,
     min1,
-    sep1,
+    // sep1,
     sec10,
     sec1,
-    sep2,
+    // sep2,
     mill10,
     mill100,
     mill1000,
