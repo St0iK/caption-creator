@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 import { Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { onSetVideoSrc } from "../../store/actions/videoSrcActions";
-import { formatSeconds } from "../../services/timing";
+import { getVTTFromCues } from "../../services/vtt-generator";
 
 const useStyles = makeStyles((theme) => ({
   loaderRoot: {
@@ -38,18 +38,6 @@ const VideoPlayer = forwardRef((props, ref) => {
       return vttBlobUrl;
     });
   }, [cues]);
-
-  function getVTTFromCues(cueList, title = "Some title") {
-    const vttParts = cueList.map((nextCue) => {
-      const start = formatSeconds(nextCue.startTime);
-      const end = formatSeconds(nextCue.endTime);
-      return `${start} --> ${end}\n${nextCue.text}\n\n`;
-    });
-
-    vttParts.unshift(`WEBVTT - ${title}\n\n`);
-
-    return new Blob(vttParts, { type: "text/vtt" });
-  }
 
   const onFilesSelected = (e) => {
     const [videoFile] = e.target.files;

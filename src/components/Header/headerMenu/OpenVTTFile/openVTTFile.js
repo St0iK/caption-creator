@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import {
   MenuItem,
   ListItemIcon,
@@ -6,20 +6,25 @@ import {
   Button,
 } from "@material-ui/core";
 import { TextFields as OpenVTTIcon } from "@material-ui/icons";
-// import { useDispatch} from 'react-redux';
-// import {onSetVideoSrc} from '../../../../store/actions/videoSrcActions';
+import { getCuesFromVTT } from "../../../../services/vtt-generator";
+import { useDispatch } from "react-redux";
+import { onChangeCues } from "../../../../store/actions/cueActions";
 
 const OpenVTTFile = ({ handleClose }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const onFilesSelected = (e) => {
+  const onFilesSelected = useCallback(async (e) => {
     e.stopPropagation();
-    console.log("Open VTT file");
-    // const [videoFile] = e.target.files;
-    // dispatch(onSetVideoSrc(videoFile))
-  };
 
-  const openVTTbtnRef = React.useRef();
+    try {
+      const newCues = await getCuesFromVTT(e.target.files[0]);
+      dispatch(onChangeCues(newCues));
+    } catch (e) {
+      console.log("error loading .vtt file");
+    }
+  });
+
+  const openVTTbtnRef = useRef();
 
   const handleMenuClick = (e) => {
     // Trigger the <Button>'s click event programmatically, so that the open file dialog is opened
@@ -28,7 +33,7 @@ const OpenVTTFile = ({ handleClose }) => {
   };
 
   return (
-    <MenuItem onClick={handleMenuClick} disabled>
+    <MenuItem onClick={handleMenuClick}>
       <ListItemIcon>
         <OpenVTTIcon />
         <input
